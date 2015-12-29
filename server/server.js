@@ -4,7 +4,7 @@ var partials = require('express-partials');
 var port = process.env.PORT || 3000;
 var bodyParser = require('body-parser');
 
-var config = require('./config.js');
+var config = require('./config.js') || undefined;
 var accountSid = process.env.TWILIO_SID || config.twilio.account;
 var authToken = process.env.TWILIO_AUTH || config.twilio.token;
 var twilio = require('twilio')(accountSid, authToken);
