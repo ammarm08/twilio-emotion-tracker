@@ -1,7 +1,7 @@
 var passport = require('passport');
 var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
-var clientID = process.env.CLIENT_ID || require('config.js').clientID;
-var clientSecret = process.env.CLIENT_SECRET || require('config.js').clientSecret;
+var clientID = process.env.CLIENT_ID || require('./config.js').google.clientID;
+var clientSecret = process.env.CLIENT_SECRET || require('./config.js').google.clientSecret;
 var utils = require('./utils');
 
 passport.serializeUser(function(user, done) {
@@ -18,7 +18,6 @@ passport.use(new GoogleStrategy({
     callbackURL: "/auth/google/callback"
   },
   function(accessToken, refreshToken, profile, done) {
-    // Change to Sequelize semantics
     utils.findOrCreateUser(profile, function(err, user) {
       if (err) return done(err, null);
       return done(null, profile);

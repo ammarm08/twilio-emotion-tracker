@@ -8,8 +8,6 @@ exports.checkUser = function (req, res, next) {
 
 exports.isAuthorizedUser = function (req, res, next) {
   var id = req.user.id || null;
-
-  // Change to Sequelize semantics
   User.findOne({googleid: id}, function(err, user) {
     if (err) return res.status(401).send('Unauthorized User');
     req.persistedUser = user;
@@ -23,15 +21,9 @@ exports.findOrCreateUser = function (profile, callback) {
 
     var options = {
       googleid: profile.id, 
-      name: profile.displayName,
-      prestige: 10,
-      massAppeal: 10,
-      weirdFactor: 10,
-      funFactor: 10,
-      score: {x: 0, y: 0},
+      name: profile.displayName
     };
 
-    // Change to Sequelize semantics
     var newUser = new User(options);
 
     newUser.save(function(user) {
@@ -40,12 +32,10 @@ exports.findOrCreateUser = function (profile, callback) {
     
   });
 
+  var findUser = function (options, callback) {
+    User.findOne({googleid: options.id}, function(err, doc) {
+      return doc ? callback(doc) : callback(null);
+    })
+  };
+
 }
-
-var findUser = function (options, callback) {
-
-  // Change to Sequelize semantics
-  User.findOne({googleid: options.id}, function(err, doc) {
-    return doc ? callback(doc) : callback(null);
-  })
-};

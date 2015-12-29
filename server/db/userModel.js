@@ -1,28 +1,11 @@
-var sequelize = require('./database.js');
+var mongoose = require('mongoose');
 
-var User = sequelize.define('user', {
-  firstName: {
-    type: Sequelize.STRING,
-    field: 'first_name'
-  },
-  lastName: {
-    type: Sequelize.STRING,
-    field: 'last_name'
-  },
-  googleID: {
-    type: Sequelize.NUMBER,
-    field: 'google_id'
-  }
-}, {
-  freezeTableName: true // Model tableName will be the same as the model name
+var userSchema = mongoose.Schema({
+ googleid: Number,
+ name: String
 });
 
-User.sync({force: true}).then(function () {
-  // Table created
-  return User.create({
-    firstName: 'John',
-    lastName: 'Hancock'
-  });
-});
+var User = mongoose.model('User', userSchema);
+
 
 module.exports = User;
