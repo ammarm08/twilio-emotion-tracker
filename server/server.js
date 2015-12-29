@@ -33,24 +33,17 @@ app.get('/login', function(req, res, next) {
 });
 
 app.post('/api/messages', function(req, res) {
-  if (twilio.validateExpressRequest(req, accountSid)) {
-    // var twiml = new twilio.TwimlResponse();
-    // twiml.say('express sez - hello twilio!');
+  
+  client.messages.create({ 
+      to: "+12404819157", 
+      from: twilioNum, 
+      body: "Got it.", 
+  }, function(err, message) { 
+      console.log(message.sid); 
+  });
 
-    // res.type('text/xml');
-    client.messages.create({ 
-        to: "+12404819157", 
-        from: twilioNum, 
-        body: "Got it.", 
-    }, function(err, message) { 
-        console.log(message.sid); 
-    });
-    
-    res.send(JSON.stringify(req));
-  }
-  else {
-    res.status(403).send('you are not twilio. Buzz off.');
-  }
+  res.send(JSON.stringify(req));
+ 
 });
 
 app.get('/auth/google',
