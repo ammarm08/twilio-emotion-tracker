@@ -6,7 +6,7 @@ var bodyParser = require('body-parser');
 
 var accountSid = process.env.TWILIO_SID || require('./config.js').twilio.account;
 var authToken = process.env.TWILIO_AUTH || require('./config.js').twilio.token;
-var twilio = require('twilio')(accountSid, authToken);
+var twilio = require('twilio');
 
 var passport = require('./auth-strategy.js');
 var session = require('express-session');
