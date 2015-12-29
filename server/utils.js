@@ -32,10 +32,10 @@ exports.findOrCreateUser = function (profile, callback) {
     
   });
 
-  var findUser = function (options, callback) {
-    User.findOne({googleid: options.id}, function(err, doc) {
-      return doc ? callback(doc) : callback(null);
-    })
-  };
-
 }
+
+var findUser = function (options, callback) {
+  User.findOne({googleid: options.id}, function(err, doc) {
+    return doc ? callback(doc) : callback(null);
+  })
+};
