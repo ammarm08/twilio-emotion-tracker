@@ -6,7 +6,9 @@ var bodyParser = require('body-parser');
 
 var accountSid = process.env.TWILIO_SID || require('./config.js').twilio.account;
 var authToken = process.env.TWILIO_AUTH || require('./config.js').twilio.token;
+var twilioNum = process.env.NUM || require('./config.js').twilio.number;
 var twilio = require('twilio');
+var client = twilio(accountSid, authToken);
 
 var passport = require('./auth-strategy.js');
 var session = require('express-session');
@@ -36,6 +38,14 @@ app.post('/api/messages', function(req, res) {
     // twiml.say('express sez - hello twilio!');
 
     // res.type('text/xml');
+    client.messages.create({ 
+        to: "+12404819157", 
+        from: twilioNum, 
+        body: "Got it.", 
+    }, function(err, message) { 
+        console.log(message.sid); 
+    });
+    
     res.send(JSON.stringify(req));
   }
   else {
