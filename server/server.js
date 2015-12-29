@@ -32,11 +32,11 @@ app.get('/login', function(req, res, next) {
 
 app.post('/api/messages', function(req, res) {
   if (twilio.validateExpressRequest(req, accountSid)) {
-    var twiml = new twilio.TwimlResponse();
-    twiml.say('express sez - hello twilio!');
+    // var twiml = new twilio.TwimlResponse();
+    // twiml.say('express sez - hello twilio!');
 
-    res.type('text/xml');
-    res.send(twiml.toString());
+    // res.type('text/xml');
+    res.send(JSON.stringify(req));
   }
   else {
     res.status(403).send('you are not twilio. Buzz off.');
