@@ -34,17 +34,14 @@ app.get('/login', function(req, res, next) {
 
 app.post('/api/messages', function(req, res) {
 
-  console.log(req);
-  
-  client.messages.create({ 
-      to: "+12404819157", 
-      from: twilioNum, 
-      body: "Got it.", 
-  }, function(err, message) { 
-      console.log(message.sid); 
-  });
-
-  res.send(JSON.stringify(req));
+  if (req.body.SmsStatus === 'received' && req.body.AccountSid === accountSid) {
+    utils.handleTextMessage(req.body, client, twilioNum, function(err, data) {
+      if (err) return res.status(403).send(err);
+      res.status(201).send(data);
+    });
+  } else {
+    res.status(403).send("Error handling text messsage. Check your request params");
+  }
  
 });
 
