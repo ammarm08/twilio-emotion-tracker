@@ -33,6 +33,8 @@ app.get('/login', function(req, res, next) {
 });
 
 app.post('/api/messages', function(req, res) {
+
+  console.log(req);
   
   client.messages.create({ 
       to: "+12404819157", 
