@@ -32,27 +32,17 @@ app.get('/login', function(req, res, next) {
 });
 
 app.post('/api/messages', function(req, res) {
-  twilio.sendMessage({
+  if (twilio.validateExpressRequest(req, accountSid)) {
+    var twiml = new twilio.TwimlResponse();
+    twiml.say('express sez - hello twilio!');
 
-    to:'2404819157', // Any number Twilio can deliver to
-    from: '2406509223', // A number you bought from Twilio and can use for outbound communication
-    body: 'testing node back-end.' // body of the SMS message
-
-  }, function(err, responseData) { //this function is executed when a response is received from Twilio
-
-    if (!err) { // "err" is an error received during the request, if any
-
-        // "responseData" is a JavaScript object containing data received from Twilio.
-        // A sample response from sending an SMS message is here (click "JSON" to see how the data appears in JavaScript):
-        // http://www.twilio.com/docs/api/rest/sending-sms#example-1
-
-        console.log(responseData.from); // outputs "+14506667788"
-        console.log(responseData.body); // outputs "word to your mother."
-        res.status(201).send("Message successfully sent");
-
-    }
-  });
-})
+    res.type('text/xml');
+    res.send(twiml.toString());
+  }
+  else {
+    res.status(403).send('you are not twilio. Buzz off.');
+  }
+});
 
 app.get('/auth/google',
   passport.authenticate('google', { scope: 'https://www.googleapis.com/auth/plus.login' }),
