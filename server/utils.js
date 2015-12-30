@@ -30,7 +30,7 @@ exports.handleTextMessage = function(twilioBody, twilioClient, twilioNum, callba
     } else {
       // var parsed = parseMessage(twilioBody.Body);
       sendMessage(twilioClient, twilioBody.From, twilioNum, "Found!");
-      callback(null, data);
+      callback(null, "Found!");
       // writeData(user, parsed, function(err, data) {
       //   if (err) return callback(err, null);
       //   console.log('THE DATA: ' + data);
