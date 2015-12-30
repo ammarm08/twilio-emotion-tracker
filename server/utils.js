@@ -70,6 +70,7 @@ var writeData = function(user, messages, callback) {
     return callback(messages, null);
   }
 
+  sendMessage(twilioClient, twilioBody.From, twilioNum, "Got it.");
   // Write to DB
   var newData = {
     emotion: parseInt(messages[0]),
