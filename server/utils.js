@@ -45,6 +45,29 @@ exports.handleTextMessage = function(twilioBody, twilioClient, twilioNum, callba
 
 }
 
+exports.parseMessage = function(text) {
+
+  // clean up response text
+  var messages = text.split(",");
+  var booleans = ['yes','no'];
+
+  // error handling: not long enough + first arg is not a number
+  if (messages.length < 3) return "Invalid format: Not enough arguments";
+  if (isNaN(parseInt(messages[0]))) return "Invalid format: First argument must be a number";
+
+  messages = [messages[0], messages[1], messages.slice(2, messages.length).join()];
+
+  for (var i = 0; i < messages.length; i++) {
+    var word = messages[i];
+    messages[i] = word.replace(/\s*/, "");
+  }
+
+  // error handling: second argument isn't a yes/no.
+  if (booleans.indexOf(messages[1].toLowerCase()) < 0) return "Invalid format: Second arg must be yes or no";
+
+  return text;
+}
+
 exports.findOrCreateUser = function (profile, callback) {
   findUser(profile, function(exists) {
     if (exists) return callback(null, exists);
@@ -71,6 +94,8 @@ var findUser = function (options, callback) {
     return doc ? callback(doc) : callback(null);
   })
 };
+
+
 
 // var parseText = function (user, messageBody, callback) {
 

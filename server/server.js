@@ -86,6 +86,26 @@ app.post('/api/messages', function(req, res) {
  
 });
 
+//test route!
+app.get('/api/messages', function(req, res) {
+  var message1 = "5, yes, I had to pack for my trip to NYC "; // it works
+  var message2 = "5, yes"; // not enough args
+  var message3 = "yo, no"; // first is not an int
+  var message4 = "5, si"; // second is not yes/no
+  var message5 = "5, no, I had to pack for my trip to NYC, and then drive to the bus stop"; // third is long
+  var parsed1 = utils.parseMessage(message1);
+  var parsed2 = utils.parseMessage(message2);
+  var parsed3 = utils.parseMessage(message3);
+  var parsed4 = utils.parseMessage(message4);
+  var parsed5 = utils.parseMessage(message5);
+  console.log('1: ' + parsed1);
+  console.log('2: ' + parsed2);
+  console.log('3: ' + parsed3);
+  console.log('4: ' + parsed4);
+  console.log('5: ' + parsed5);
+  res.status(200).send("A Okay!");
+})
+
 // ALL OTHER ROUTES
 app.get('/*', utils.checkUser, function(req, res, next) {
   res.redirect('/');
