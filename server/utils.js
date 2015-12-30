@@ -28,7 +28,7 @@ exports.handleTextMessage = function(twilioBody, twilioClient, twilioNum, callba
     return callback(parsed, null);
   }
 
-  User.findOne({phone_number: twilioBody.From.slice(2)}, function(err, user) {
+  User.findOne({phone_number: twilioBody.From}, function(err, user) {
     if (user) {
       sendMessage(twilioClient, twilioBody.From, twilioNum, "Got it.");
 
@@ -87,7 +87,7 @@ exports.findOrCreateUser = function (profile, callback) {
     var options = {
       googleid: profile.id, 
       name: profile.displayName,
-      phone_number: profile.phone_number
+      phone_number: "+1" + profile.phone_number
     };
 
     var newUser = new User(options);
