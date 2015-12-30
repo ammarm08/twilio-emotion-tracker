@@ -29,11 +29,13 @@ exports.handleTextMessage = function(twilioBody, twilioClient, twilioNum, callba
       callback(notFound, null);
     } else {
       var parsed = parseMessage(twilioBody.Body);
-      writeData(user, parsed, function(err, data) {
-        if (err) return callback(err, null);
-        console.log('THE DATA: ' + data);
-        callback(null, data);
-      });
+      sendMessage(twilioClient, twilioBody.From, twilioNum, JSON.stringify(user));
+      callback(null, data);
+      // writeData(user, parsed, function(err, data) {
+      //   if (err) return callback(err, null);
+      //   console.log('THE DATA: ' + data);
+      //   callback(null, data);
+      // });
     }
   });
 
