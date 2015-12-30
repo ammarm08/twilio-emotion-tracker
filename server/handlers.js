@@ -1,4 +1,7 @@
 var utils = require('./utils');
+var twilio = require('./twilio');
+
+var WELCOME_MESSAGE = "Thanks for signing up for the emotion tracker! We will be sending you a daily text to remind you to record your data, as well as instructions as to how we need your text to be formatted. Happy self improving!";
 
 exports.renderIndex = function(req, res) {
   res.render('index');
@@ -23,6 +26,13 @@ exports.addUserNumber = function(req, res, next) {
   utils.findOrCreateUser(options, function(err, user) {
     if (err) return res.status(403).send(err);
     console.log(user);
+    twilio.client.messages.create({
+      to: user.phone_number,
+      from: twilio.num,
+      body: WELCOME_MESSAGE
+    }, function(err, result) {
+      console.log(result.sid);
+    })
     res.render('index');
   });
-}
+};
