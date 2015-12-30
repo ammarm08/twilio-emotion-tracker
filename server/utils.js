@@ -80,7 +80,7 @@ var parseMessage = function(text) {
   if (booleans.indexOf(boolString) < 0) return "Invalid format: Second arg must be yes or no";
 
   // only returns an array (messages) if there are no errors
-  message[1] = boolString === 'yes' ? true : false;
+  messages[1] = boolString === 'yes' ? true : false;
   return messages;
 }
 
