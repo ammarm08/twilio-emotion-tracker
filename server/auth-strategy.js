@@ -1,7 +1,7 @@
 var passport = require('passport');
 var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
-var clientID = process.env.CLIENT_ID || require('./config.js').google.clientID;
-var clientSecret = process.env.CLIENT_SECRET || require('./config.js').google.clientSecret;
+var clientID = process.env.CLIENT_ID || require('../config.js').google.clientID;
+var clientSecret = process.env.CLIENT_SECRET || require('../config.js').google.clientSecret;
 var utils = require('./utils');
 
 passport.serializeUser(function(user, done) {
