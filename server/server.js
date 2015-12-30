@@ -74,8 +74,7 @@ app.get('/auth/google/callback',
 
 // TWILIO ROUTES
 app.post('/api/messages', function(req, res) {
-
-  if (req.body.SmsStatus === 'received' && req.body.AccountSid === accountSid) {
+  if (twilio.validateExpressRequest(req, authToken)) {
     utils.handleTextMessage(req.body, client, twilioNum, function(err, data) {
       if (err) return res.status(403).send(err);
       res.status(201).send(data);
