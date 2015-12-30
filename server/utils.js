@@ -21,26 +21,36 @@ exports.checkUserRegistry = function (req, res, next) {
 
 exports.handleTextMessage = function(twilioBody, twilioClient, twilioNum, callback) {
 
-  // check if user exists, if not, text back telling user to sign up on website first.
+  var parsed = parseMessage(twilioBody.Body);
+
+  if (!Array.isArray(parsed)) {
+    sendMessage(twilioClient, twilioBody.From, twilioNum, parsed);
+    return callback(parsed, null);
+  }
+
   User.findOne({phone_number: twilioBody.From.slice(2)}, function(err, user) {
-    if (!user || err) {
+    if (user) {
+      sendMessage(twilioClient, twilioBody.From, twilioNum, "Got it.");
+
+      // Write to DB
+      var newData = {
+        emotion: parseInt(messages[0]),
+        hydrate: messages[1],
+        note: messages[2],
+        date: new Date()
+      };
+
+      user.children.push(newData);
+
+      user.save(function(err) {
+        if (err) return callback(err, null);
+        callback(null, newData);
+      });
+
+    } else {
       var notFound = "No user found. Create an account at regulate.herokuapp.com!";
       sendMessage(twilioClient, twilioBody.From, twilioNum, notFound);
       callback(notFound, null);
-    } else {
-      var parsed = parseMessage(twilioBody.Body);
-
-      if (!Array.isArray(parsed)) {
-        sendMessage(twilioClient, twilioBody.From, twilioNum, parsed);
-        return callback(parsed, null);
-      }
-      sendMessage(twilioClient, twilioBody.From, twilioNum, "Got it.");
-      callback(null, "Found!");
-      // writeData(user, parsed, function(err, data) {
-      //   if (err) return callback(err, null);
-      //   console.log('THE DATA: ' + data);
-      //   callback(null, data);
-      // });
     }
   });
 
@@ -69,31 +79,6 @@ var parseMessage = function(text) {
   // only returns an array (messages) if there are no errors
   return messages;
 }
-
-var writeData = function(user, messages, callback) {
-
-  if (!Array.isArray(messages)) {
-    sendMessage(twilioClient, twilioBody.From, twilioNum, messages);
-    return callback(messages, null);
-  }
-
-  sendMessage(twilioClient, twilioBody.From, twilioNum, "Got it.");
-  // Write to DB
-  var newData = {
-    emotion: parseInt(messages[0]),
-    hydrate: messages[1],
-    note: messages[2],
-    date: new Date()
-  };
-
-  user.children.push(newData);
-
-  user.save(function(err) {
-    if (err) return callback(err, null);
-    callback(null, newData);
-  });
-
-};
 
 exports.findOrCreateUser = function (profile, callback) {
   findUser(profile, function(exists) {
