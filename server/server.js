@@ -98,12 +98,12 @@ app.get('/api/messages', function(req, res) {
   var parsed3 = utils.parseMessage(message3);
   var parsed4 = utils.parseMessage(message4);
   var parsed5 = utils.parseMessage(message5);
-  console.log('1: ' + parsed1);
-  console.log('2: ' + parsed2);
-  console.log('3: ' + parsed3);
-  console.log('4: ' + parsed4);
-  console.log('5: ' + parsed5);
-  res.status(200).send("A Okay!");
+
+  utils.writeData(req.user, parsed1, function(err, message) {
+    if (err) return res.status(403).send(err);
+    console.log(message);
+    res.status(201).json(message);
+  });
 })
 
 // ALL OTHER ROUTES

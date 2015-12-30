@@ -65,7 +65,30 @@ exports.parseMessage = function(text) {
   // error handling: second argument isn't a yes/no.
   if (booleans.indexOf(messages[1].toLowerCase()) < 0) return "Invalid format: Second arg must be yes or no";
 
-  return text;
+  // only returns an array (messages) if there are no errors
+  return messages;
+}
+
+exports.writeData = function(user, messages, callback) {
+
+  if (!Array.isArray(messages)) {
+    return callback("Not a valid message", null);
+  }
+
+  // Write to DB
+  var newData = new Data({
+    user: user._id,
+    emotion: parseInt(messages[0]),
+    hydrate: messages[1],
+    note: messages[2],
+    date: new Date()
+  });
+
+  newData.save(function(err) {
+    if (err) return callback(err, null);
+    callback(null, newData);
+  });
+
 }
 
 exports.findOrCreateUser = function (profile, callback) {
@@ -94,48 +117,6 @@ var findUser = function (options, callback) {
     return doc ? callback(doc) : callback(null);
   })
 };
-
-
-
-// var parseText = function (user, messageBody, callback) {
-
-//   if (messageBody.length < 3) return callback("Invalid message length", null);
-
-//   // clean up response text
-//   var messages = messageBody.split(",");
-//   var booleanVal, bool;
-
-//   // error handling: not long enough + first arg is not a number
-//   if (messages.length < 3) return callback("Invalid format: Not enough arguments", null);
-//   if (isNaN(parseInt(messages[0]))) return callback("Invalid format: First argument must be a number", null);
-
-//   messages = [messages[0], messages[1], messages.slice(2, messages.length).join()];
-
-//   for (var i = 0; i < messages.length; i++) {
-//     var word = messages[i];
-//     messages[i] = word.replace(/\s*/, "");
-//   }
-
-//   // error handling: second argument isn't a yes/no.
-//   booleanVal = messages[1].toLowerCase(); 
-//   if (booleanVal !== 'yes' || booleanVal !== 'no') return callback("Invalid format: Second arg must be yes or no", null);
-//   bool = booleanVal === yes ? true : false;
-
-//   //Write to DB
-//   var newData = new Data({
-//     user: user._id,
-//     emotion: parseInt(message[0]),
-//     hydrate: bool,
-//     note: message[2],
-//     date: new Date()
-//   });
-
-//   newData.save(function(err, data) {
-//     if (err) return callback("Error saving your response to our database. Try in a few hours", null);
-//     callback(null, "Successfully recorded your response!");
-//   })
-
-// };
 
 var sendMessage = function (client, recipientNum, twilioNum, response) {
   client.messages.create({ 
