@@ -22,7 +22,7 @@ exports.checkUserRegistry = function (req, res, next) {
 exports.handleTextMessage = function(twilioBody, twilioClient, twilioNum, callback) {
 
   // check if user exists, if not, text back telling user to sign up on website first.
-  User.findOne({phone_number: twilioBody.From}, function(err, user) {
+  User.findOne({phone_number: twilioBody.From.slice(2)}, function(err, user) {
     if (!user || err) {
       var notFound = "No user found. Create an account at regulate.herokuapp.com!";
       sendMessage(twilioClient, twilioBody.From, twilioNum, notFound);
