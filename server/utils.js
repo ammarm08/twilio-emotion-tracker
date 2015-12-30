@@ -62,6 +62,7 @@ var parseMessage = function(text) {
   // clean up response text
   var messages = text.split(",");
   var booleans = ['yes','no'];
+  var boolString;
 
   // error handling: not long enough + first arg is not a number
   if (messages.length < 3) return "Invalid format: Not enough arguments";
@@ -75,9 +76,11 @@ var parseMessage = function(text) {
   }
 
   // error handling: second argument isn't a yes/no.
-  if (booleans.indexOf(messages[1].toLowerCase()) < 0) return "Invalid format: Second arg must be yes or no";
+  boolString = messages[1].toLowerCase();
+  if (booleans.indexOf(boolString) < 0) return "Invalid format: Second arg must be yes or no";
 
   // only returns an array (messages) if there are no errors
+  message[1] = boolString === 'yes' ? true : false;
   return messages;
 }
 
