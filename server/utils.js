@@ -29,29 +29,35 @@ exports.handleTextMessage = function(twilioBody, twilioClient, twilioNum, callba
   }
 
   User.findOne({phone_number: twilioBody.From}, function(err, user) {
-    if (user) {
-      sendMessage(twilioClient, twilioBody.From, twilioNum, "Got it.");
+    // if (user) {
+    //   sendMessage(twilioClient, twilioBody.From, twilioNum, "Got it.");
 
-      // Write to DB
-      var newData = {
-        emotion: parseInt(messages[0]),
-        hydrate: messages[1],
-        note: messages[2],
-        date: new Date()
-      };
+    //   // Write to DB
+    //   var newData = {
+    //     emotion: parseInt(messages[0]),
+    //     hydrate: messages[1],
+    //     note: messages[2],
+    //     date: new Date()
+    //   };
 
-      user.children.push(newData);
+    //   user.children.push(newData);
 
-      user.save(function(err) {
-        if (err) return callback(err, null);
-        callback(null, newData);
-      });
+    //   user.save(function(err) {
+    //     if (err) return callback(err, null);
+    //     callback(null, newData);
+    //   });
 
-    } else {
-      var notFound = "No user found. Create an account at regulate.herokuapp.com!";
-      sendMessage(twilioClient, twilioBody.From, twilioNum, notFound);
-      callback(notFound, null);
+    // } else {
+    //   var notFound = "No user found. Create an account at regulate.herokuapp.com!";
+    //   sendMessage(twilioClient, twilioBody.From, twilioNum, notFound);
+    //   callback(notFound, null);
+    // }
+    if (err) {
+      sendMessage(twilioClient, twilioBody.From, twilioNum, JSON.stringify(err));
+      return callback(err, null);
     }
+    sendMessage(twilioClient, twilioBody.From, twilioNum, JSON.stringify(user));
+    callback(null, user);
   });
 
 }
