@@ -29,7 +29,12 @@ exports.handleTextMessage = function(twilioBody, twilioClient, twilioNum, callba
       callback(notFound, null);
     } else {
       var parsed = parseMessage(twilioBody.Body);
-      sendMessage(twilioClient, twilioBody.From, twilioNum, "Found!");
+
+      if (!Array.isArray(parsed)) {
+        sendMessage(twilioClient, twilioBody.From, twilioNum, parsed);
+        return callback(parsed, null);
+      }
+      sendMessage(twilioClient, twilioBody.From, twilioNum, "Got it.");
       callback(null, "Found!");
       // writeData(user, parsed, function(err, data) {
       //   if (err) return callback(err, null);
