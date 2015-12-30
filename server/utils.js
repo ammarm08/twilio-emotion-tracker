@@ -28,8 +28,8 @@ exports.handleTextMessage = function(twilioBody, twilioClient, twilioNum, callba
       sendMessage(twilioClient, twilioBody.From, twilioNum, notFound);
       callback(notFound, null);
     } else {
-      var parsed = parseMessage(twilioBody.Body);
-      sendMessage(twilioClient, twilioBody.From, twilioNum, JSON.stringify(user));
+      // var parsed = parseMessage(twilioBody.Body);
+      sendMessage(twilioClient, twilioBody.From, twilioNum, "Found!");
       callback(null, data);
       // writeData(user, parsed, function(err, data) {
       //   if (err) return callback(err, null);
