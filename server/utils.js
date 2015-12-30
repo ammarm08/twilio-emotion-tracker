@@ -1,6 +1,6 @@
 var db = require('./db/database');
-var User = require('./db/userModel');
-var Data = require('./db/dataModel');
+var Data = require('./db/models').Data;
+var User = require('./db/models').User;
 
 exports.checkUser = function (req, res, next) {
   if (req.isAuthenticated()) { return next(); }
@@ -29,19 +29,11 @@ exports.handleTextMessage = function(twilioBody, twilioClient, twilioNum, callba
       callback(notFound, null);
     } else {
       var parsed = parseMessage(twilioBody.Body);
-
-      if (!Array.isArray(parsed)) {
-        sendMessage(twilioClient, twilioBody.From, twilioNum, parsed);
-        return callback("Not a valid message", null);
-      } else {
-        sendMessage(twilioClient, twilioBody.From, twilioNum, "Got it.");
-        writeData(user, parsed, function(err, data) {
-          if (err) return callback(err, null);
-          console.log('THE DATA: ' + data);
-          callback(null, data);
-        });
-      }
-      
+      writeData(user, parsed, function(err, data) {
+        if (err) return callback(err, null);
+        console.log('THE DATA: ' + data);
+        callback(null, data);
+      });
     }
   });
 
@@ -73,21 +65,27 @@ var parseMessage = function(text) {
 
 var writeData = function(user, messages, callback) {
 
+  if (!Array.isArray(messages)) {
+    sendMessage(twilioClient, twilioBody.From, twilioNum, messages);
+    return callback(messages, null);
+  }
+
   // Write to DB
-  var newData = new Data({
-    user: user._id,
+  var newData = {
     emotion: parseInt(messages[0]),
     hydrate: messages[1],
     note: messages[2],
     date: new Date()
-  });
+  };
 
-  newData.save(function(err) {
+  user.children.push(newData);
+
+  user.save(function(err) {
     if (err) return callback(err, null);
     callback(null, newData);
   });
 
-}
+};
 
 exports.findOrCreateUser = function (profile, callback) {
   findUser(profile, function(exists) {

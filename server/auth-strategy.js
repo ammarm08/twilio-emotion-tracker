@@ -20,11 +20,7 @@ passport.use(new GoogleStrategy({
   function(accessToken, refreshToken, profile, done) {
     process.nextTick(function() {
       return done(null, profile);
-    })
-    // utils.findOrCreateUser(profile, function(err, user) {
-    //   if (err) return done(err, null);
-    //   return done(null, profile);
-    // });
+    });
   }
 ));
 
