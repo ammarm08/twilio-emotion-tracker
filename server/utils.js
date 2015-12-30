@@ -28,24 +28,19 @@ exports.handleTextMessage = function(twilioBody, twilioClient, twilioNum, callba
       sendMessage(twilioClient, twilioBody.From, twilioNum, notFound);
       callback(notFound, null);
     } else {
-      var found = "Found!";
-      sendMessage(twilioClient, twilioBody.From, twilioNum, found);
-      callback(null, found);
-      // parseText(user, twilioBody.Body, function(err, message) {
-      //   if (err) {
-      //     sendMessage(twilioClient, twilioBody.From, twilioNum, err);
-      //     return callback(err, null);
-      //   } else {
-      //     sendMessage(twilioClient, twilioBody.From, twilioNum, message);
-      //     return callback(null, message);
-      //   }
-      // }
+      var parsed = parseMessage(twilioBody.Body);
+      writeData(user, parsed, function(err, data) {
+        if (err) return callback(err, null);
+        console.log(data);
+        sendMessage(twilioClient, twilioBody.From, twilioNum, "Got it.");
+        callback(null, data);
+      });
     }
   });
 
 }
 
-exports.parseMessage = function(text) {
+var parseMessage = function(text) {
 
   // clean up response text
   var messages = text.split(",");
@@ -69,7 +64,7 @@ exports.parseMessage = function(text) {
   return messages;
 }
 
-exports.writeData = function(user, messages, callback) {
+var writeData = function(user, messages, callback) {
 
   if (!Array.isArray(messages)) {
     return callback("Not a valid message", null);
