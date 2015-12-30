@@ -29,13 +29,19 @@ exports.handleTextMessage = function(twilioBody, twilioClient, twilioNum, callba
       callback(notFound, null);
     } else {
       var parsed = parseMessage(twilioBody.Body);
-      sendMessage(twilioClient, twilioBody.From, twilioNum, "Got it.");
-      writeData(user, parsed, function(err, data) {
-        if (err) return callback(err, null);
-        console.log(data);
+
+      if (!Array.isArray(parsed)) {
+        sendMessage(twilioClient, twilioBody.From, twilioNum, parsed);
+        return callback("Not a valid message", null);
+      } else {
         sendMessage(twilioClient, twilioBody.From, twilioNum, "Got it.");
-        callback(null, data);
-      });
+        writeData(user, parsed, function(err, data) {
+          if (err) return callback(err, null);
+          console.log('THE DATA: ' + data);
+          callback(null, data);
+        });
+      }
+      
     }
   });
 
@@ -66,10 +72,6 @@ var parseMessage = function(text) {
 }
 
 var writeData = function(user, messages, callback) {
-
-  if (!Array.isArray(messages)) {
-    return callback("Not a valid message", null);
-  }
 
   // Write to DB
   var newData = new Data({
