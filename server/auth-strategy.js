@@ -18,10 +18,13 @@ passport.use(new GoogleStrategy({
     callbackURL: "/auth/google/callback"
   },
   function(accessToken, refreshToken, profile, done) {
-    utils.findOrCreateUser(profile, function(err, user) {
-      if (err) return done(err, null);
+    process.nextTick(function() {
       return done(null, profile);
-    });
+    })
+    // utils.findOrCreateUser(profile, function(err, user) {
+    //   if (err) return done(err, null);
+    //   return done(null, profile);
+    // });
   }
 ));
 

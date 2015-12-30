@@ -7,10 +7,10 @@
   <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
 </head>
 <body>
-  <div id="app">
-    <h1>WELCOME!</h1>
-    <a href="/logout">Log Out!</a>
-  </div>
+  <form action="/complete" method="POST">
+    <p>Username: <%- displayName %></p>
+    Phone Number: <input type="text" name="phone_number" minlength="10" maxlength="10" placeholder="Number format: 2404819157"><br>
+  </form>
   <script src="/../bundle.js"></script>
 </body>
 </html>

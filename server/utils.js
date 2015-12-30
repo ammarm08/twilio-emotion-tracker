@@ -7,12 +7,15 @@ exports.checkUser = function (req, res, next) {
   res.redirect('/login');
 };
 
-exports.isAuthorizedUser = function (req, res, next) {
+exports.checkUserRegistry = function (req, res, next) {
+  // if # found, next()
   var id = req.user.id || null;
   User.findOne({googleid: id}, function(err, user) {
-    if (err) return res.status(401).send('Unauthorized User');
-    req.persistedUser = user;
-    return next();
+    if (!user || !user.phone_number) {
+      res.redirect('/complete');
+    } else {
+      next();
+    }
   });
 };
 
@@ -48,13 +51,15 @@ exports.findOrCreateUser = function (profile, callback) {
 
     var options = {
       googleid: profile.id, 
-      name: profile.displayName
+      name: profile.displayName,
+      phone_number: profile.phone_number
     };
 
     var newUser = new User(options);
 
-    newUser.save(function(user) {
-      return callback(null, user);
+    newUser.save(function(err) {
+      if (err) return callback(err, null);
+      callback(null, newUser);
     });
     
   });
