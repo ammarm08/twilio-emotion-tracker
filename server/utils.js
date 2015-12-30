@@ -107,12 +107,12 @@ var findUser = function (options, callback) {
   })
 };
 
-var sendMessage = function (client, recipientNum, twilioNum, response) {
+var sendMessage = function (client, recipient, sender, message) {
   client.messages.create({ 
-      to: recipientNum, 
-      from: twilioNum, 
-      body: response, 
-  }, function(err, message) { 
-      console.log(message.sid); 
+      to: recipient, 
+      from: sender, 
+      body: message, 
+  }, function(err, result) { 
+      console.log(result.sid); 
   });
 }
