@@ -40,6 +40,18 @@ exports.handleTextMessage = function(twilioBody, twilioClient, twilioNum, callba
 
 }
 
+exports.sendWorkerTexts = function(twilio, message, callback) {
+  var user;
+  User.find({}, function(err, docs) {
+    if (err) return callback(err, null);
+    for (var i = 0; i < docs.length; i++) {
+      user = docs[i];
+      sendMessage(twilio.client, user.phone_number, twilio.num, message);
+    }
+    callback(null, docs);
+  });
+}
+
 var writeData = function(user, messages) {
   // Write to DB
   var newData = {

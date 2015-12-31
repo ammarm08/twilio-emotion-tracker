@@ -1,0 +1,11 @@
+#!/usr/bin/env node
+
+var twilio = require('/../server/twilio');
+var utils = require('/../server/utils');
+var MESSAGE = "Here are today's three questions: How's your day going (0-10)? Did you stay hydrated (yes/no)? Then add a note. Answers must be comma separated. Example -- 5, yes, I woke up late";
+
+utils.sendWorkerTexts(twilio, MESSAGE, function(err, users) {
+  if (err) return console.error(err);
+  console.log('[SENT]');
+  console.log(users);
+});
