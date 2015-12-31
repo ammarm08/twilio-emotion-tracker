@@ -7,8 +7,8 @@
 
 ### Next Steps ###
 
-- [ ] [Automation] Worker to send out a text reminder every day
-- [ ] [Twilio] Send a welcome message upon phone number registration
+- ~~[Automation] Worker to send out a text reminder every day~~
+- ~~[Twilio] Send a welcome message upon phone number registration~~
 - [ ] [Twilio] If text == "Stop", remove user from daily text
 - [ ] [Twilio] If text == "Restart", get user back onto daily text
 - [ ] [DB] If text == "Delete", delete user from DB
