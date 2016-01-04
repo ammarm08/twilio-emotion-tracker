@@ -13,10 +13,10 @@
 - [ ] [Twilio] If text == "Restart", get user back onto daily text
 - [ ] [DB] If text == "Delete", delete user from DB
 - [ ] [Security] Double check authorization/authentication for each route
-- [ ] [UI] Build React+Flux front-end that displays a table of all user data
-- [ ] [UI] Display user data as data visualizations (D3/Highcharts/Crossfilter)
-- [ ] [UI] Tooltips: on hover, show a specific day's note + more details
-- [ ] [Automation] Write build scripts to Browserify, bundle, and deploy app
+- [ ] [UI] Build React+Flux front-end
+- ~~[UI] Display user data as data visualizations (D3/Highcharts/Crossfilter)~~
+- ~~[UI] Tooltips: on hover, show a specific day's note + more details~~
+- ~~[Automation] Write build scripts to Browserify, bundle, and deploy app~~
 - [ ] [Test] Write unit test suite for DB entries, Twilio endpoints, user auth
 - [ ] [Automation] Incorporate Travis for continuous deployment
 - [ ] [Security] Build user panel where user can edit his account settings
