@@ -23,6 +23,17 @@ module.exports = function(app, passport) {
       res.redirect('/');
   });
 
+  // DATA ROUTES
+  app.get('/api/users', function(req, res) {
+
+    utils.findOrCreateUser(req.user, function(err, user) {
+      if (err) return res.status(404).json([]);
+      var results = user.children;
+      res.status(200).json(results);
+    });
+
+  }) 
+
   // TWILIO ROUTES
   app.post('/api/messages', function(req, res) {
     if (twilio.handler.validateExpressRequest(req, twilio.authToken)) {

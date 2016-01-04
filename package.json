@@ -4,7 +4,9 @@
   "description": "",
   "main": "server/server.js",
   "scripts": {
-    "start": "node server/server.js"
+    "start": "npm run build && npm run server",
+    "build": "browserify ./src/App.js -o ./public/bundle.js",
+    "server": "nodemon server/server.js"
   },
   "author": "",
   "license": "ISC",

@@ -4,10 +4,7 @@ var twilio = require('./twilio');
 var WELCOME_MESSAGE = "Thanks for signing up for the emotion tracker! We will be sending you a daily text to remind you to record your data, as well as instructions as to how we need your text to be formatted. Happy self improving!";
 
 exports.renderIndex = function(req, res) {
-  utils.findOrCreateUser(req.user, function(err, user) {
-    if (err) return res.render('index', {data: []});
-    res.render('index', {data: user.children});
-  })
+  res.render('index');
 };
 
 exports.renderLogin = function(req, res) {
