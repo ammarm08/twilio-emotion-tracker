@@ -2,12 +2,26 @@
 <html>
 <head>
   <title>Twilio Testing</title>
+  <link href='https://fonts.googleapis.com/css?family=Crimson+Text:600' rel='stylesheet' type='text/css'>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
   <link rel="stylesheet" href="/../styles/style.css">
   <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
 </head>
 <body>
-  <a href="/auth/google">Log in with Google </a>
+  <div id="splash">
+    <div class="container" id="splash-jumbo">
+      <div class="row">
+        <div class="col-sm-4" id="tagline">
+          <h1>Know Thyself. One Text a Day.</h1>
+          <button class="btn btn-danger btn-lg" href="/auth/google">Login with Google</button>
+        </div>
+        <div class="col-sm-6" id="iphone-mock">
+          <img src="./images/iphone-overlay.png">
+        </div>
+        </div>
+      </div>
+  </div>
+  
   <script src="/../bundle.js"></script>
 </body>
 </html>
