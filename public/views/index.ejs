@@ -8,9 +8,29 @@
   <script src="http://d3js.org/d3.v3.min.js"></script>
 </head>
 <body>
-  <div id="app">
-    <h1>WELCOME!</h1>
-    <a href="/logout">Log Out!</a>
+
+  <div class="row">
+    <div class="container">
+      <h1>Regulate</h1>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="container">
+
+      <div class="col-sm-3">
+        <ul class="list-group" id="sidenav">
+          <li><a href="#"><span class="glyphicon glyphicon-home"></span>  Home</a></li>
+          <li><a href="#"><span class="glyphicon glyphicon-align-left"></span>  Settings</a></li>
+          <li><a href="/logout"><span class="glyphicon glyphicon-eject"></span>  Log Out</a></li>
+        </ul>
+      </div>
+      
+      <div class="col-sm-9">
+        <div id="app"></div>
+      </div>
+
+    </div>
   </div>
   <script src="/../bundle.js"></script>
   <script type="text/javascript">App.getData();</script>

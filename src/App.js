@@ -6,11 +6,12 @@
 
         // Set the dimensions of the canvas / graph
         var margin = {top: 30, right: 20, bottom: 30, left: 50},
-            width = 600 - margin.left - margin.right,
-            height = 270 - margin.top - margin.bottom;
+            width = 800 - margin.left - margin.right,
+            height = 500 - margin.top - margin.bottom;
 
         // Parse the date / time
         var iso = d3.time.format.utc("%Y-%m-%dT%H:%M:%S.%LZ");
+        var readDate = d3.time.format("%Y-%m-%d");
         var parseDate = iso.parse;
 
         // Set the ranges
@@ -25,12 +26,13 @@
             .orient("left").ticks(5);
 
         // Define the div for the tooltip
-        var div = d3.select("body").append("div")   
-            .attr("class", "tooltip")               
-            .style("opacity", 0);
+        var div = d3.select("body")
+            .append("div")   
+                .attr("class", "tooltip")            
+                .style("opacity", 0);
             
         // Adds the svg canvas
-        var svg = d3.select("body")
+        var svg = d3.select("#app")
             .append("svg")
                 .attr("width", width + margin.left + margin.right)
                 .attr("height", height + margin.top + margin.bottom)
@@ -52,18 +54,21 @@
         svg.selectAll("dot")
             .data(data)
           .enter().append("circle")
-            .attr("r", 5)
+            .attr("r", 10)
             .attr("cx", function(d) { return x(d.date); })
             .attr("cy", function(d) { return y(d.emotion); })
-            .on("mouseover", function(d) {      
+            .on("mouseover", function(d) { 
                 div.transition()        
                     .duration(200)      
                     .style("opacity", .9);      
-                div .html(d.note)  
-                    .style("left", (d3.event.pageX) + "px")     
-                    .style("top", (d3.event.pageY - 28) + "px");    
+                div .html('<span class="label">Date: </span>' + readDate(d.date) + '<br/>' +
+                          '<span class="label">Emotion: </span>' + d.emotion + '<br/>' +
+                          '<span class="label">Hydrated?: </span>' + d.hydrate + '<br/>' + 
+                          '<span class="label">Note: </span>' + d.note + '<br/>')  
+                    .style("left", (d3.event.pageX + 20) + "px")     
+                    .style("top", (d3.event.pageY - 28) + "px")    
                 })                  
-            .on("mouseout", function(d) {       
+            .on("mouseout", function(d) {
                 div.transition()        
                     .duration(500)      
                     .style("opacity", 0);   
