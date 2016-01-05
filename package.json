@@ -13,6 +13,7 @@
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.14.2",
+    "browserify": "^12.0.1",
     "ejs": "^2.3.4",
     "express": "^4.13.3",
     "express-partials": "^0.3.0",
@@ -22,8 +23,5 @@
     "passport": "^0.3.2",
     "passport-google-oauth": "^0.2.0",
     "twilio": "^2.8.0"
-  },
-  "devDependencies": {
-    "browserify": "^12.0.1"
   }
 }
