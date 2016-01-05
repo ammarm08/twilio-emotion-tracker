@@ -11,9 +11,11 @@
   <div id="splash">
     <div class="container" id="splash-jumbo">
       <div class="row">
-        <div class="col-sm-4" id="tagline">
+        <div class="col-sm-4 form form-group" id="tagline">
           <h1>Know Thyself. One Text a Day.</h1>
-          <button class="btn btn-danger btn-lg" href="/auth/google">Login with Google</button>
+          <form action="/auth/google" method="GET">
+            <button class="btn btn-danger btn-lg" href="/auth/google">Login with Google</button>
+          </form>
         </div>
         <div class="col-sm-6" id="iphone-mock">
           <img src="./images/iphone-overlay.png">
