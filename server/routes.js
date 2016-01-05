@@ -5,8 +5,8 @@ var handlers = require('./handlers');
 module.exports = function(app, passport) {
 
   app.get('/', utils.checkUser, utils.checkUserRegistry, handlers.renderIndex);
-  app.get('/complete', handlers.renderComplete);
-  app.post('/complete', handlers.addUserNumber);
+  app.get('/complete', utils.checkUser, handlers.renderComplete);
+  app.post('/complete', utils.checkUser, handlers.addUserNumber);
   app.get('/login', handlers.renderLogin);
   app.get('/logout', handlers.logout);
 

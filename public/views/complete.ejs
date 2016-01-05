@@ -7,10 +7,29 @@
   <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
 </head>
 <body>
-  <form action="/complete" method="POST">
-    <p>Username: <%- displayName %></p>
-    Phone Number: <input type="text" name="phone_number" minlength="10" maxlength="10" placeholder="Number format: 2404819157"><br>
-  </form>
+  <div class="container" id="splash-jumbo">
+    <div class="row">
+      <div class="col-sm-4">
+
+        <form id="phone-entry" action="/complete" method="POST">
+          <h1>Almost there! We just need your digits.</h1>
+          <fieldset class="form-group">
+            <label for="username">Name</label>
+            <input type="text" class="form-control" id="username" placeholder=<%- displayName %> disabled>
+          </fieldset>
+          <fieldset class="form-group">
+            <label for="phone-number">Phone Number</label>
+            <input type="text" name="phone_number" class="form-control" pattern="\d{10}" id="phone-number" placeholder="Format: 2404819157">
+          </fieldset>
+          <button type="submit" class="btn btn-danger form-control">Submit</button>
+        </form>
+
+      </div>
+      <div class="col-sm-6" id="iphone-mock">
+        <img src="./images/iphone-overlay.png">
+      </div>
+    </div>
+  </div>
   <script src="/../bundle.js"></script>
 </body>
 </html>

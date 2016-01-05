@@ -23,6 +23,7 @@ exports.renderComplete = function(req, res) {
 exports.addUserNumber = function(req, res, next) {
   var options = req.user;
   options.phone_number = req.body.phone_number;
+  
   utils.findOrCreateUser(options, function(err, user) {
     if (err) return res.status(403).send(err);
     console.log(user);
