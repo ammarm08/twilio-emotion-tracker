@@ -22,6 +22,7 @@
     "mongoose-auto-increment": "^5.0.1",
     "passport": "^0.3.2",
     "passport-google-oauth": "^0.2.0",
+    "serve-favicon": "^2.3.0",
     "twilio": "^2.8.0"
   }
 }
