@@ -7,6 +7,11 @@
   <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
 </head>
 <body>
+
+  <% if (typeof flashError !== "undefined") { %>
+    <div class="flash-error"><%-flashError%></div>
+  <% } %>
+
   <div class="container" id="splash-jumbo">
     <div class="row">
       <div class="col-sm-4">

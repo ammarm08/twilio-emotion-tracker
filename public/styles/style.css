@@ -30,6 +30,11 @@ Landing Page
 Complete
 */
 
+.flash-error {
+    background-color: red;
+    opacity: 0.5;
+}
+
 #phone-entry {
     width: 250px;
     margin: 100px auto;

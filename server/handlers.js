@@ -21,9 +21,14 @@ exports.renderComplete = function(req, res) {
 }
 
 exports.addUserNumber = function(req, res, next) {
+
+  if (!validPhoneNumberFormat(req.body.phone_number)) {
+    return res.render('index', {flashError: "Invalid phone number- must be a 10-digit number with no spaces!"});
+  }
+
   var options = req.user;
   options.phone_number = req.body.phone_number;
-  
+
   utils.findOrCreateUser(options, function(err, user) {
     if (err) return res.status(403).send(err);
     console.log(user);
@@ -37,3 +42,9 @@ exports.addUserNumber = function(req, res, next) {
     res.render('index');
   });
 };
+
+var validPhoneNumberFormat = function(number) {
+  var pattern = /(\d{10})/i;
+  var found = number.match(pattern);
+  return !!found;
+}
