@@ -21,18 +21,19 @@ exports.checkUserRegistry = function (req, res, next) {
 
 exports.handleTextMessage = function(twilioBody, twilioClient, twilioNum, callback) {
 
-  var parsed = parseMessage(twilioBody.Body);
-  var accountActions = ["stop", "restart", "delete"];
+  var parsed = exports.parseMessage(twilioBody.Body);
 
   // If trying to "stop"/"restart" texts or "delete" account
-  // if (accountActions.indexOf(twilioBody.Body.replace(/\s*/g,"")) > -1) {
-  //   handleAccountAction(twilioBody.From, twilioBody.Body.replace(/\s*/g,""), function(err, user) {
-  //     if (err) {
-  //       sendMessage(twilioClient, twilioBody.From, twilioNum, JSON.stringify(err));
-  //     }
-  //     sendMessage(twilioClient, twilioBody.From, twilioNum, "Got it");
-  //   });
-  // }
+  if (exports.validAccountAction(twilioBody.Body)) {
+    handleAccountAction(twilioBody.From, twilioBody.Body.replace(/\s*/g,""), function(err, user) {
+      if (err) {
+        sendMessage(twilioClient, twilioBody.From, twilioNum, JSON.stringify(err));
+        return callback(err, null);
+      }
+      sendMessage(twilioClient, twilioBody.From, twilioNum, "Got it");
+      return callback(null, user);
+    });
+  }
 
   // If the message isn't properly formatted
   if (!Array.isArray(parsed)) {
@@ -53,57 +54,7 @@ exports.handleTextMessage = function(twilioBody, twilioClient, twilioNum, callba
 
 }
 
-exports.sendWorkerTexts = function(twilio, message, callback) {
-  var user;
-  User.find({}, function(err, docs) {
-    if (err) return callback(err, null);
-    for (var i = 0; i < docs.length; i++) {
-      user = docs[i];
-      sendMessage(twilio.client, user.phone_number, twilio.num, message);
-    }
-    callback(null, docs);
-  });
-}
-
-var writeData = function(user, messages) {
-  // Write to DB
-  var newData = {
-    emotion: parseInt(messages[0]),
-    hydrate: messages[1],
-    note: messages[2],
-    date: new Date()
-  };
-
-  user.children.push(newData);
-
-  user.save(function(err) {
-    if (err) return console.error(err);
-    console.log("Success!");
-  });
-}
-
-exports.findOrCreateUser = function (profile, callback) {
-  findUser(profile, function(exists) {
-    if (exists) return callback(null, exists);
-
-    var options = {
-      googleid: profile.id, 
-      name: profile.displayName,
-      phone_number: "+1" + profile.phone_number
-    };
-
-    var newUser = new User(options);
-
-    newUser.save(function(err) {
-      if (err) return callback(err, null);
-      callback(null, newUser);
-    });
-    
-  });
-
-}
-
-var parseMessage = function(text) {
+exports.parseMessage = function(text) {
 
   // clean up response text
   var messages = text.split(",");
@@ -128,7 +79,53 @@ var parseMessage = function(text) {
   // only returns an array (messages) if there are no errors
   messages[1] = boolString === 'yes' ? true : false;
   return messages;
+
 };
+
+// for test case use only (approximating handleAccountActions)
+exports.validAccountAction = function(text) {
+
+  var accountActions = ["stop", "restart", "delete"];
+
+  if (accountActions.indexOf(text.replace(/\s*/g,"")) > -1) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
+exports.sendWorkerTexts = function(twilio, message, callback) {
+  var user;
+  User.find({}, function(err, docs) {
+    if (err) return callback(err, null);
+    for (var i = 0; i < docs.length; i++) {
+      user = docs[i];
+      sendMessage(twilio.client, user.phone_number, twilio.num, message);
+    }
+    callback(null, docs);
+  });
+}
+
+exports.findOrCreateUser = function (profile, callback) {
+  findUser(profile, function(exists) {
+    if (exists) return callback(null, exists);
+
+    var options = {
+      googleid: profile.id, 
+      name: profile.displayName,
+      phone_number: "+1" + profile.phone_number
+    };
+
+    var newUser = new User(options);
+
+    newUser.save(function(err) {
+      if (err) return callback(err, null);
+      callback(null, newUser);
+    });
+    
+  });
+
+}
 
 // retool this method to make it more reusable!
 var findUser = function (options, callback) {
@@ -147,12 +144,42 @@ var sendMessage = function (client, recipient, sender, message) {
   });
 };
 
-// var handleAccountAction = function (phoneNumber, message, callback) {
-//   if (message === "stop") {
-//     // find user by phone number, then update dailyText field to FALSE
-//   } else if (message === "restart") {
-//     // find user by phone number, then update dailyText field to TRUE
-//   } else {
-//     // delete -- User.findOne({phone_number: phoneNumber}).remove().exec()
-//   }
-// }
+var writeData = function(user, messages) {
+  // Write to DB
+  var newData = {
+    emotion: parseInt(messages[0]),
+    hydrate: messages[1],
+    note: messages[2],
+    date: new Date()
+  };
+
+  user.children.push(newData);
+
+  user.save(function(err) {
+    if (err) return console.error(err);
+    console.log("Success!");
+  });
+};
+
+var handleAccountAction = function (phoneNumber, message, callback) {
+  
+  User.findOne({phone_number: phoneNumber}, function(err, user) {
+    if (err) {
+      sendMessage(twilioClient, twilioBody.From, twilioNum, JSON.stringify(err));
+      return callback(err, null);
+    }
+    
+    // delete user
+    if (message === "delete") {
+      user.remove().exec();
+      callback(null, user);
+    // otherwise handle "stop" or "restart"
+    } else {
+      user.daily_text = message === "stop" ? false : true;
+      user.save(function(err) {
+        if (err) return callback(err, null);
+        callback(null, user);
+      })
+    }
+  });
+}

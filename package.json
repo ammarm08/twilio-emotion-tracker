@@ -4,10 +4,10 @@
   "description": "",
   "main": "server/server.js",
   "scripts": {
-    "start": "npm run build && npm run test && npm run server",
+    "start": "npm run build && npm run server",
     "build": "browserify ./src/App.js -o ./public/bundle.js",
     "server": "node server/server.js",
-    "dev-server": "nodemon server/server.js",
+    "dev-server": "npm run test && nodemon server/server.js",
     "test": "mocha"
   },
   "author": "",

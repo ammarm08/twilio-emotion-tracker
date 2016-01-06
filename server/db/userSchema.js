@@ -5,6 +5,7 @@ var userSchema = mongoose.Schema({
  googleid: Number,
  name: String,
  phone_number: String,
+ daily_text: { type: Boolean, default: true },
  children: [dataSchema]
 });
 

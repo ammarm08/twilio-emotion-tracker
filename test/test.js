@@ -6,6 +6,7 @@ var app = require('../server/server.js');
 var db = require('../server/db/database');
 var Data = require('../server/db/models').Data;
 var User = require('../server/db/models').User;
+var utils = require('../server/utils.js');
 
 /////////////////////////////////////////////////////
 // NOTE: these tests are designed for mongo
@@ -123,7 +124,7 @@ describe('Text Messages:', function() {
   describe('Server handling of new messages', function() {
     
     xit('Throws an error if message isn\'t comma separated', function(done) {
-    
+
     });
 
     xit('Throws an error if message has less than three answers', function(done) {
@@ -151,24 +152,35 @@ describe('Text Messages:', function() {
   // TODO: write tests
   describe('Parsing messages by type', function() {
     
-    xit('Logs a verbose error message if message is inappropriately formatted', function(done) {
-    
+    it('Logs a verbose error message if message is inappropriately formatted', function(done) {
+      var notLongEnough = "5, true";
+      var notAnInteger = "hi, true, test";
+      var notABoolean = "5, hi, test";
+
+      expect(utils.parseMessage(notLongEnough)).to.equal("Invalid format: Not enough arguments");
+      expect(utils.parseMessage(notAnInteger)).to.equal("Invalid format: First argument must be a number");
+      expect(utils.parseMessage(notABoolean)).to.equal("Invalid format: Second arg must be yes or no");
+      done();
     });
 
-    xit('Parses message into an array of responses if message is properly formatted', function(done) {
-
+    it('Parses message into an array of responses if message is properly formatted', function(done) {
+      var validMessage = "5, no, test";
+      var parsed = utils.parseMessage(validMessage);
+      expect(typeof parsed).to.equal("object");
+      done();
     });
 
-    xit('Recognizes when message requests a "Stop" action', function(done) {
-
+    it('Returns true when message requests a "Stop", "Reset", or "Delete" action', function(done) {
+      expect(utils.validAccountAction('stop')).to.equal(true);
+      expect(utils.validAccountAction('restart')).to.equal(true);
+      expect(utils.validAccountAction('delete')).to.equal(true);
+      expect(utils.validAccountAction(' stop ')).to.equal(true);
+      done();
     });
 
-    xit('Recognizes when message requests a "Reset" action', function(done) {
-
-    });
-
-    xit('Recognizes when message requests a "Delete" action', function(done) {
-
+    it('Returns false when message requests any other action', function(done) {
+      expect(utils.validAccountAction('george of the jungle')).to.equal(false);
+      done();
     });
 
   });
