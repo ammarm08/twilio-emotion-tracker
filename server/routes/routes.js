@@ -1,6 +1,6 @@
-var twilio = require('./twilio');
-var utils = require('./utils');
-var handlers = require('./handlers');
+var twilio = require('../twilio');
+var utils = require('../utils');
+var handlers = require('./routeHandlers');
 
 module.exports = function(app, passport) {
 

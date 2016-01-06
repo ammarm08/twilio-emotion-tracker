@@ -19,6 +19,6 @@ app.use(express.static(__dirname + '/../public'));
 app.use(favicon("./public/images/favicon.ico"));
 
 // INITIALIZE ROUTES
-require('./routes')(app, passport);
+require('./routes/routes')(app, passport);
 
 module.exports = app;
