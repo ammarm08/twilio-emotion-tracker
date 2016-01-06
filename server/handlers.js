@@ -39,7 +39,7 @@ exports.addUserNumber = function(req, res, next) {
     }, function(err, result) {
       console.log(result.sid);
     })
-    res.render('index');
+    res.redirect('/');
   });
 };
 
