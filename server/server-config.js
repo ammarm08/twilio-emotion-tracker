@@ -1,6 +1,6 @@
 var express = require('express');
 var app = express();
-var passport = require('./auth-strategy.js');
+var passport = require('./auth/auth-strategy.js');
 
 var partials = require('express-partials');
 var session = require('express-session');
