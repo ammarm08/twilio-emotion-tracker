@@ -85,7 +85,8 @@ exports.parseMessage = function(text) {
 // for test case use only (approximating handleAccountActions)
 exports.validAccountAction = function(text) {
 
-  var accountActions = ["stop", "restart", "delete"];
+  var accountActions = ["remove", "restart", "delete"];
+  text = text.toLowerCase();
 
   if (accountActions.indexOf(text.replace(/\s*/g,"")) > -1) {
     return true;
@@ -162,7 +163,6 @@ var writeData = function(user, messages) {
 };
 
 var handleAccountAction = function (phoneNumber, message, callback) {
-  
   User.findOne({phone_number: phoneNumber}, function(err, user) {
     if (err) {
       sendMessage(twilioClient, twilioBody.From, twilioNum, JSON.stringify(err));
@@ -171,11 +171,11 @@ var handleAccountAction = function (phoneNumber, message, callback) {
     
     // delete user
     if (message === "delete") {
-      user.remove().exec();
+      User.remove({phone_number: phoneNumber}).exec();
       callback(null, user);
     // otherwise handle "stop" or "restart"
     } else {
-      user.daily_text = message === "stop" ? false : true;
+      user.daily_text = message === "remove" ? false : true;
       user.save(function(err) {
         if (err) return callback(err, null);
         callback(null, user);

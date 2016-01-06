@@ -171,10 +171,10 @@ describe('Text Messages:', function() {
     });
 
     it('Returns true when message requests a "Stop", "Reset", or "Delete" action', function(done) {
-      expect(utils.validAccountAction('stop')).to.equal(true);
+      expect(utils.validAccountAction('remove')).to.equal(true);
       expect(utils.validAccountAction('restart')).to.equal(true);
       expect(utils.validAccountAction('delete')).to.equal(true);
-      expect(utils.validAccountAction(' stop ')).to.equal(true);
+      expect(utils.validAccountAction(' remove ')).to.equal(true);
       done();
     });
 
