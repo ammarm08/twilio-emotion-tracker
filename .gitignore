@@ -1,5 +1,5 @@
 node_modules/
 config.js
 public/bundle.js
-seed/
+seed/seed.js
 test/test.js
