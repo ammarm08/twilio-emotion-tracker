@@ -18,6 +18,8 @@ new User({
   name: NAME,
   googleid: GOOGLEID,
   phone_number: PHONE_NUMBER
+}).save(function() {
+  //WOOHOO!
 });
 
 // build dummy data
