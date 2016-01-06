@@ -103,7 +103,7 @@ exports.sendWorkerTexts = function(twilio, message, callback) {
     if (err) return callback(err, null);
     for (var i = 0; i < docs.length; i++) {
       user = docs[i];
-      sendMessage(twilio.client, user.phone_number, twilio.num, message);
+      if (user.daily_text) sendMessage(twilio.client, user.phone_number, twilio.num, message);
     }
     callback(null, docs);
   });
