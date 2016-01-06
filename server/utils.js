@@ -25,7 +25,7 @@ exports.handleTextMessage = function(twilioBody, twilioClient, twilioNum, callba
 
   // If trying to "stop"/"restart" texts or "delete" account
   if (exports.validAccountAction(twilioBody.Body)) {
-    handleAccountAction(twilioBody.From, twilioBody.Body, function(err, user) {
+    exports.handleAccountAction(twilioBody.From, twilioBody.Body, function(err, user) {
       if (err) {
         sendMessage(twilioClient, twilioBody.From, twilioNum, JSON.stringify(err));
         return callback(err, null);
@@ -49,12 +49,55 @@ exports.handleTextMessage = function(twilioBody, twilioClient, twilioNum, callba
       }
       sendMessage(twilioClient, twilioBody.From, twilioNum, "Splendid. To stop receiving my messages, please text Remove. If you dearly miss them, please text Restart. To delete your account, please text Delete. Being entirely honest with oneself is a good exercise. Be well.");
       callback(null, user);
-      writeData(user, parsed);
+      exports.writeData(user, parsed);
     });
 
   }
 
 }
+
+exports.handleAccountAction = function (phoneNumber, message, callback) {
+
+  message = message.replace(/\s*/g,"");
+  message = message.toLowerCase();
+
+  User.findOne({phone_number: phoneNumber}, function(err, user) {
+    if (err) {
+      sendMessage(twilioClient, twilioBody.From, twilioNum, JSON.stringify(err));
+      return callback(err, null);
+    }
+    
+    // delete user
+    if (message === "delete") {
+      User.remove({phone_number: phoneNumber}).exec();
+      callback(null, user);
+    // otherwise handle "stop" or "restart"
+    } else {
+      user.daily_text = message === "remove" ? false : true;
+      user.save(function(err) {
+        if (err) return callback(err, null);
+        callback(null, user);
+      })
+    }
+  });
+};
+
+exports.writeData = function(user, messages) {
+  // Write to DB
+  var newData = {
+    emotion: parseInt(messages[0]),
+    hydrate: messages[1],
+    note: messages[2],
+    date: new Date()
+  };
+
+  user.children.push(newData);
+
+  user.save(function(err) {
+    if (err) return console.error(err);
+    console.log("Success!");
+  });
+};
 
 exports.parseMessage = function(text) {
 
@@ -84,7 +127,24 @@ exports.parseMessage = function(text) {
 
 };
 
-// for test case use only (approximating handleAccountActions)
+exports.writeData = function(user, messages) {
+  // Write to DB
+  var newData = {
+    emotion: parseInt(messages[0]),
+    hydrate: messages[1],
+    note: messages[2],
+    date: new Date()
+  };
+
+  user.children.push(newData);
+
+  user.save(function(err) {
+    if (err) return console.error(err);
+    console.log("Success!");
+  });
+};
+
+// for test case use only (approximating exports.handleAccountActions)
 exports.validAccountAction = function(text) {
 
   var accountActions = ["remove", "restart", "delete"];
@@ -147,45 +207,3 @@ var sendMessage = function (client, recipient, sender, message) {
   });
 };
 
-var writeData = function(user, messages) {
-  // Write to DB
-  var newData = {
-    emotion: parseInt(messages[0]),
-    hydrate: messages[1],
-    note: messages[2],
-    date: new Date()
-  };
-
-  user.children.push(newData);
-
-  user.save(function(err) {
-    if (err) return console.error(err);
-    console.log("Success!");
-  });
-};
-
-var handleAccountAction = function (phoneNumber, message, callback) {
-
-  message = message.replace(/\s*/g,"");
-  message = message.toLowerCase();
-
-  User.findOne({phone_number: phoneNumber}, function(err, user) {
-    if (err) {
-      sendMessage(twilioClient, twilioBody.From, twilioNum, JSON.stringify(err));
-      return callback(err, null);
-    }
-    
-    // delete user
-    if (message === "delete") {
-      User.remove({phone_number: phoneNumber}).exec();
-      callback(null, user);
-    // otherwise handle "stop" or "restart"
-    } else {
-      user.daily_text = message === "remove" ? false : true;
-      user.save(function(err) {
-        if (err) return callback(err, null);
-        callback(null, user);
-      })
-    }
-  });
-}
