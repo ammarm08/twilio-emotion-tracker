@@ -16,6 +16,11 @@ var utils = require('../server/utils.js');
 
 var testUser;
 
+// FILL THESE OUT.
+var NAME = "YOUR_NAME";
+var GOOGLEID = parseInt("YOUR_GOOGLE_ID");
+var PHONE_NUMBER = "+1YOURNUMBERNOSPACES";
+
 /* Authentication and Authorization */
 describe('Priviledged Access:', function() {
   beforeEach(function(done) {
@@ -130,9 +135,9 @@ describe('Text Messages:', function() {
 
     beforeEach(function(done) {
       var options = {
-        googleid: //use your own googleid - NUMBER,
-        name: //your name - STRING,
-        phone_number: //your phone number - STRING (with +1 prefix)
+        googleid: GOOGLEID,
+        name: NAME,
+        phone_number: PHONE_NUMBER
       };
       testUser = new User(options);
 
@@ -164,7 +169,7 @@ describe('Text Messages:', function() {
     });
 
     it('Deletes a user if the message requests a "Delete" action', function(done) {
-      utils.handleAccountAction("+12404819157", "delete", function(err, user) {
+      utils.handleAccountAction(PHONE_NUMBER, "delete", function(err, user) {
         User.find({}, function(err, docs) {
           expect(docs.length).to.equal(0);
           done();
@@ -173,17 +178,17 @@ describe('Text Messages:', function() {
     });
 
     it('Removes a user from textserve if the message requests a "Remove" action', function(done) {
-      utils.handleAccountAction("+12404819157", "remove", function(err, user) {
+      utils.handleAccountAction(PHONE_NUMBER, "remove", function(err, user) {
         expect(user.daily_text).to.equal(false);
         done();
       });
     });
 
     it('Adds a user to textserve if the message requests a "Restart" action', function(done) {
-      utils.handleAccountAction("+12404819157", "remove", function(err, user) {
+      utils.handleAccountAction(PHONE_NUMBER, "remove", function(err, user) {
         // this sets daily_text to FALSE
       });
-      utils.handleAccountAction("+12404819157", "restart", function(err, user) {
+      utils.handleAccountAction(PHONE_NUMBER, "restart", function(err, user) {
         expect(user.daily_text).to.equal(true);
         done();
       })
