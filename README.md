@@ -9,9 +9,9 @@
 
 - ~~[Automation] Worker to send out a text reminder every day~~
 - ~~[Twilio] Send a welcome message upon phone number registration~~
-- [ ] [Twilio] If text == "Stop", remove user from daily text
-- [ ] [Twilio] If text == "Restart", get user back onto daily text
-- [ ] [DB] If text == "Delete", delete user from DB
+- ~~[Twilio] If text == "Stop", remove user from daily text~~
+- ~~[Twilio] If text == "Restart", get user back onto daily text~~
+- ~~[DB] If text == "Delete", delete user from DB~~
 - ~~[Security] Double check authorization/authentication for each route~~
 - [ ] [UI] Build React+Flux front-end
 - ~~[UI] Display user data as data visualizations (D3/Highcharts/Crossfilter)~~
