@@ -30,7 +30,7 @@ exports.handleTextMessage = function(twilioBody, twilioClient, twilioNum, callba
         sendMessage(twilioClient, twilioBody.From, twilioNum, JSON.stringify(err));
         return callback(err, null);
       }
-      sendMessage(twilioClient, twilioBody.From, twilioNum, "Got it");
+      sendMessage(twilioClient, twilioBody.From, twilioNum, "Splendid. Out of your vulnerabilities will come your strength. Until next time.");
       return callback(null, user);
     });
   // If the message isn't properly formatted
@@ -47,7 +47,7 @@ exports.handleTextMessage = function(twilioBody, twilioClient, twilioNum, callba
         sendMessage(twilioClient, twilioBody.From, twilioNum, JSON.stringify(err));
         return callback(err, null);
       }
-      sendMessage(twilioClient, twilioBody.From, twilioNum, "Got it");
+      sendMessage(twilioClient, twilioBody.From, twilioNum, "Splendid. To stop receiving my messages, please text Remove. If you dearly miss them, please text Restart. To delete your account, please text Delete. Being entirely honest with oneself is a good exercise. Be well.");
       callback(null, user);
       writeData(user, parsed);
     });
@@ -64,8 +64,8 @@ exports.parseMessage = function(text) {
   var boolString;
 
   // error handling: not long enough + first arg is not a number
-  if (messages.length < 3) return "Invalid format: Not enough arguments";
-  if (isNaN(parseInt(messages[0]))) return "Invalid format: First argument must be a number";
+  if (messages.length < 3) return "Something went wrong. I kindly request you answer all my questions.";
+  if (isNaN(parseInt(messages[0]))) return "Something went wrong. Please answer the first question with a number between 0 and 10";
 
   messages = [messages[0], messages[1], messages.slice(2, messages.length).join()];
 
@@ -76,7 +76,7 @@ exports.parseMessage = function(text) {
 
   // error handling: second argument isn't a yes/no.
   boolString = messages[1].toLowerCase();
-  if (booleans.indexOf(boolString) < 0) return "Invalid format: Second arg must be yes or no";
+  if (booleans.indexOf(boolString) < 0) return "Something went wrong. The second question must have a yes or a no as a response.";
 
   // only returns an array (messages) if there are no errors
   messages[1] = boolString === 'yes' ? true : false;
