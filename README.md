@@ -13,12 +13,15 @@
 - ~~[Twilio] If text == "Restart", get user back onto daily text~~
 - ~~[DB] If text == "Delete", delete user from DB~~
 - ~~[Security] Double check authorization/authentication for each route~~
-- [ ] [UI] Build React+Flux front-end
 - ~~[UI] Display user data as data visualizations (D3/Highcharts/Crossfilter)~~
 - ~~[UI] Tooltips: on hover, show a specific day's note + more details~~
 - ~~[Automation] Write build scripts to Browserify, bundle, and deploy app~~
 - ~~[Test] Write unit test suite for DB entries, Twilio endpoints, user auth~~
+- [ ] [UX] Give Sigmund a personality (curmudgeonly German philosopher)
+- [ ] [UI] Build React+Flux front-end
+- [ ] [UX] Revamp web app design
 - [ ] [Automation] Incorporate Travis for continuous deployment
-- [ ] [Security] Build user panel where user can edit his account settings
-- [ ] [UI] Allow user to edit/add/delete note for a given day
 - [ ] [Deployment] Shift over to Docker? (just for funsies)
+- [ ] [UI] Allow user to edit/add/delete note for a given day
+- [ ] [Security] Build user panel where user can edit his account settings
+
