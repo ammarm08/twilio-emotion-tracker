@@ -22,12 +22,25 @@ exports.checkUserRegistry = function (req, res, next) {
 exports.handleTextMessage = function(twilioBody, twilioClient, twilioNum, callback) {
 
   var parsed = parseMessage(twilioBody.Body);
+  var accountActions = ["stop", "restart", "delete"];
 
+  // If trying to "stop"/"restart" texts or "delete" account
+  // if (accountActions.indexOf(twilioBody.Body.replace(/\s*/g,"")) > -1) {
+  //   handleAccountAction(twilioBody.From, twilioBody.Body.replace(/\s*/g,""), function(err, user) {
+  //     if (err) {
+  //       sendMessage(twilioClient, twilioBody.From, twilioNum, JSON.stringify(err));
+  //     }
+  //     sendMessage(twilioClient, twilioBody.From, twilioNum, "Got it");
+  //   });
+  // }
+
+  // If the message isn't properly formatted
   if (!Array.isArray(parsed)) {
     sendMessage(twilioClient, twilioBody.From, twilioNum, parsed);
     return callback(parsed, null);
   }
 
+  // Otherwise, write data to DB and send a confirmation text to user
   User.findOne({phone_number: twilioBody.From}, function(err, user) {
     if (err) {
       sendMessage(twilioClient, twilioBody.From, twilioNum, JSON.stringify(err));
@@ -69,6 +82,27 @@ var writeData = function(user, messages) {
   });
 }
 
+exports.findOrCreateUser = function (profile, callback) {
+  findUser(profile, function(exists) {
+    if (exists) return callback(null, exists);
+
+    var options = {
+      googleid: profile.id, 
+      name: profile.displayName,
+      phone_number: "+1" + profile.phone_number
+    };
+
+    var newUser = new User(options);
+
+    newUser.save(function(err) {
+      if (err) return callback(err, null);
+      callback(null, newUser);
+    });
+    
+  });
+
+}
+
 var parseMessage = function(text) {
 
   // clean up response text
@@ -94,29 +128,9 @@ var parseMessage = function(text) {
   // only returns an array (messages) if there are no errors
   messages[1] = boolString === 'yes' ? true : false;
   return messages;
-}
+};
 
-exports.findOrCreateUser = function (profile, callback) {
-  findUser(profile, function(exists) {
-    if (exists) return callback(null, exists);
-
-    var options = {
-      googleid: profile.id, 
-      name: profile.displayName,
-      phone_number: "+1" + profile.phone_number
-    };
-
-    var newUser = new User(options);
-
-    newUser.save(function(err) {
-      if (err) return callback(err, null);
-      callback(null, newUser);
-    });
-    
-  });
-
-}
-
+// retool this method to make it more reusable!
 var findUser = function (options, callback) {
   User.findOne({googleid: options.id}, function(err, doc) {
     return doc ? callback(doc) : callback(null);
@@ -131,4 +145,14 @@ var sendMessage = function (client, recipient, sender, message) {
   }, function(err, result) { 
       console.log(result.sid); 
   });
-}
+};
+
+// var handleAccountAction = function (phoneNumber, message, callback) {
+//   if (message === "stop") {
+//     // find user by phone number, then update dailyText field to FALSE
+//   } else if (message === "restart") {
+//     // find user by phone number, then update dailyText field to TRUE
+//   } else {
+//     // delete -- User.findOne({phone_number: phoneNumber}).remove().exec()
+//   }
+// }
