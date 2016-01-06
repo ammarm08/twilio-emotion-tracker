@@ -7,7 +7,7 @@
     "start": "npm run build && npm run server",
     "build": "browserify ./src/App.js -o ./public/bundle.js",
     "server": "node server/server.js",
-    "dev-server": "npm run test && nodemon server/server.js",
+    "dev": "npm run test && nodemon server/server.js",
     "test": "mocha"
   },
   "author": "",
