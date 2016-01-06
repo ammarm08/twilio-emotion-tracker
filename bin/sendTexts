@@ -2,7 +2,7 @@
 
 var twilio = require('../server/twilio.js');
 var utils = require('../server/utils.js');
-var MESSAGE = "Here are today's three questions: How's your day going (0-10)? Did you stay hydrated (yes/no)? Then add a note. Answers must be comma separated. Example -- 5, yes, I woke up late";
+var MESSAGE = "My dear friend: How is your day going? Did you stay hydrated? How would you describe your day? For my sake, please separate your responses with commas. Example: 7, yes, walking lunch with Friedrich. Sincerely, Sigmund";
 
 utils.sendWorkerTexts(twilio, MESSAGE, function(err, users) {
   if (err) return console.error(err);
