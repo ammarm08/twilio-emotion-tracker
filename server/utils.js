@@ -33,24 +33,27 @@ exports.handleTextMessage = function(twilioBody, twilioClient, twilioNum, callba
       sendMessage(twilioClient, twilioBody.From, twilioNum, "Got it");
       return callback(null, user);
     });
-  }
 
   // If the message isn't properly formatted
-  if (!Array.isArray(parsed)) {
+  } else if (!Array.isArray(parsed)) {
+
     sendMessage(twilioClient, twilioBody.From, twilioNum, parsed);
     return callback(parsed, null);
-  }
 
   // Otherwise, write data to DB and send a confirmation text to user
-  User.findOne({phone_number: twilioBody.From}, function(err, user) {
-    if (err) {
-      sendMessage(twilioClient, twilioBody.From, twilioNum, JSON.stringify(err));
-      return callback(err, null);
-    }
-    sendMessage(twilioClient, twilioBody.From, twilioNum, "Got it");
-    callback(null, user);
-    writeData(user, parsed);
-  });
+  } else {
+
+    User.findOne({phone_number: twilioBody.From}, function(err, user) {
+      if (err) {
+        sendMessage(twilioClient, twilioBody.From, twilioNum, JSON.stringify(err));
+        return callback(err, null);
+      }
+      sendMessage(twilioClient, twilioBody.From, twilioNum, "Got it");
+      callback(null, user);
+      writeData(user, parsed);
+    });
+
+  }
 
 }
 
