@@ -38,11 +38,11 @@ module.exports = function(app, passport) {
   app.post('/api/messages', function(req, res) {
     if (twilio.handler.validateExpressRequest(req, twilio.authToken)) {
       utils.handleTextMessage(req.body, twilio.client, twilio.num, function(err, data) {
-        if (err) return res.set('Content-Type', 'text/xml').status(400).send(err);
-        res.set('Content-Type', 'text/xml').status(201).send(data);
+        if (err) return res.status(400).send(err);
+        res.status(201).send(data);
       });
     } else {
-      res.set('Content-Type', 'text/xml').status(403).send("Error handling text messsage. Check your request params");
+      res.set.status(403).send("Error handling text messsage. Check your request params");
     }
    
   });
