@@ -175,6 +175,7 @@ describe('Text Messages:', function() {
       expect(utils.validAccountAction('restart')).to.equal(true);
       expect(utils.validAccountAction('delete')).to.equal(true);
       expect(utils.validAccountAction(' remove ')).to.equal(true);
+      expect(utils.validAccountAction(' Delete ')).to.equal(true);
       done();
     });
 

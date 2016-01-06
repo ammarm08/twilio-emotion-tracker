@@ -25,7 +25,7 @@ exports.handleTextMessage = function(twilioBody, twilioClient, twilioNum, callba
 
   // If trying to "stop"/"restart" texts or "delete" account
   if (exports.validAccountAction(twilioBody.Body)) {
-    handleAccountAction(twilioBody.From, twilioBody.Body.replace(/\s*/g,""), function(err, user) {
+    handleAccountAction(twilioBody.From, twilioBody.Body), function(err, user) {
       if (err) {
         sendMessage(twilioClient, twilioBody.From, twilioNum, JSON.stringify(err));
         return callback(err, null);
@@ -166,6 +166,10 @@ var writeData = function(user, messages) {
 };
 
 var handleAccountAction = function (phoneNumber, message, callback) {
+
+  message = message.replace(/\s*/g,"");
+  message = message.toLowerCase();
+  
   User.findOne({phone_number: phoneNumber}, function(err, user) {
     if (err) {
       sendMessage(twilioClient, twilioBody.From, twilioNum, JSON.stringify(err));
