@@ -8,30 +8,37 @@ var Data = require('../server/db/models').Data;
 var User = require('../server/db/models').User;
 
 /////////////////////////////////////////////////////
-// NOTE: these tests are designed for mongo!
+// NOTE: these tests are designed for mongo
 /////////////////////////////////////////////////////
 
-('', function() {
-
+/* Authentication and Authorization */
+describe('Priviledged Access:', function() {
   beforeEach(function(done) {
-    // Log out currently signed in user
     request(app)
-      .get('/logout')
-      .end(function(err, res) {
-
-        // Delete objects from db so they can be created later for the test
-        Data.remove({}).exec();
-        User.remove({}).exec();
-        done();
-      });
+    .get('/logout')
+    .end(function(err, res) {
+      Data.remove({}).exec();
+      User.remove({}).exec();
+      console.log('[PRE] Remove all entries from test database.');
+      done();
+    });
   });
 
-  describe('Priviledged Access:', function() {
+  describe('Routes for Unsigned Users', function() {
 
-    // /*  Authentication  */
     it('Redirects to login page if a user tries to access the main page and is not signed in', function(done) {
       request(app)
-        .get('/')
+      .get('/')
+      .expect(302)
+      .expect(function(res) {
+        expect(res.headers.location).to.equal('/login');
+      })
+      .end(done);
+    });
+
+    it('Redirects to login page if a user tries to access an intermediary sign-up path and isnt signed in', function(done) {
+      request(app)
+        .get('/complete')
         .expect(302)
         .expect(function(res) {
           expect(res.headers.location).to.equal('/login');
@@ -39,218 +46,156 @@ var User = require('../server/db/models').User;
         .end(done);
     });
 
-    // it('Redirects to login page if a user tries to access an intermediary sign-up path and isnt signed in', function(done) {
-    //   request(app)
-    //     .get('/create')
-    //     .expect(302)
-    //     .expect(function(res) {
-    //       expect(res.headers.location).to.equal('/login');
-    //     })
-    //     .end(done);
-    // });
+    it('Redirects to login page if a user tries to access an admin-only path', function(done) {
+      request(app)
+        .get('/api/users')
+        .expect(302)
+        .expect(function(res) {
+          expect(res.headers.location).to.equal('/login');
+        })
+        .end(done);
+    });
 
-    // it('Redirects to login page if a user tries to access an admin-only path', function(done) {
-    //   request(app)
-    //     .get('/links')
-    //     .expect(302)
-    //     .expect(function(res) {
-    //       expect(res.headers.location).to.equal('/login');
-    //     })
-    //     .end(done);
-    // });
+    it('Redirects to login page if a user tries to access any other path and isn\'t signed in', function(done) {
+      request(app)
+        .get('/aleftsharkkindofday')
+        .expect(302)
+        .expect(function(res) {
+          expect(res.headers.location).to.equal('/login');
+        })
+        .end(done);
+    });
 
-    // it('Redirects to login page if a user tries to access any other path and isn\'t signed in', function(done) {
-    //   request(app)
-    //     .get('/links')
-    //     .expect(302)
-    //     .expect(function(res) {
-    //       expect(res.headers.location).to.equal('/login');
-    //     })
-    //     .end(done);
-    // });
+  });
 
-  }); // 'Privileged Access'
+  // TODO: write tests
+  describe('Routes for Signed-In Users', function() {
 
-  // describe('Account Creation:', function() {
+    xit('Routes to root page if an existing user signs in.', function(done) {
 
-  //   it('Signup creates a new user', function(done) {
-  //     request(app)
-  //       .post('/signup')
-  //       .send({
-  //         'username': 'Svnh',
-  //         'password': 'Svnh' })
-  //       .expect(302)
-  //       .expect(function() {
-  //         User.findOne({'username': 'Svnh'})
-  //           .exec(function(err, user) {
-  //             expect(user.username).to.equal('Svnh');
-  //           });
-  //       })
-  //       .end(done);
-  //   });
+    });
 
-  //   it('Successful signup logs in a new user', function(done) {
-  //     request(app)
-  //       .post('/signup')
-  //       .send({
-  //         'username': 'Phillip',
-  //         'password': 'Phillip' })
-  //       .expect(302)
-  //       .expect(function(res) {
-  //         expect(res.headers.location).to.equal('/');
-  //         request(app)
-  //           .get('/logout')
-  //           .expect(200)
-  //       })
-  //       .end(done);
-  //   });
+    //Write more specs as necessary
 
-  // }); // 'Account Creation'
+  });
 
-  // describe('User creation: ', function() {
+});
 
-  //   it('Only shortens valid urls, returning a 404 - Not found for invalid urls', function(done) {
-  //     request(app)
-  //       .post('/links')
-  //       .send({
-  //         'url': 'definitely not a valid url'})
-  //       .expect(404)
-  //       .end(done);
-  //   });
+/* New User Creation */
+describe('Account Creation:', function() {
+  
+  // Include a beforeEach and/or afterEach function if necessary
 
-  //   describe('Shortening links:', function() {
+  // TODO: write tests
+  describe('Server handling of new users', function() {
+    
+    xit('Redirects new user to root after account creation', function(done) {
+    
+    });
 
-  //     it('Responds with the short code', function(done) {
-  //       request(app)
-  //         .post('/links')
-  //         .send({
-  //           'url': 'http://www.roflzoo.com/'})
-  //         .expect(200)
-  //         .expect(function(res) {
-  //           expect(res.body.url).to.equal('http://www.roflzoo.com/');
-  //           expect(res.body.code).to.be.ok;
-  //         })
-  //         .end(done);
-  //     });
+    xit('Sends a new user a text message after account creation', function(done) {
 
-  //     it('New links create a database entry', function(done) {
-  //       request(app)
-  //         .post('/links')
-  //         .send({
-  //           'url': 'http://www.roflzoo.com/'})
-  //         .expect(200)
-  //         .expect(function(res) {
-  //           Link.findOne({'url' : 'http://www.roflzoo.com/'})
-  //             .exec(function(err, link) {
-  //               if(err) console.log(err);
-  //               expect(link.url).to.equal('http://www.roflzoo.com/');
-  //             });
-  //         })
-  //         .end(done);
-  //     });
+    });
 
-  //     it('Fetches the link url title', function(done) {
-  //       request(app)
-  //         .post('/links')
-  //         .send({
-  //           'url': 'http://www.roflzoo.com/'})
-  //         .expect(200)
-  //         .expect(function(res) {
-  //           Link.findOne({'url' : 'http://www.roflzoo.com/'})
-  //             .exec(function(err, link) {
-  //               if(err) console.log(err);
-  //               expect(link.title).to.equal('Funny pictures of animals, funny dog pictures');
-  //             });
-  //         })
-  //         .end(done);
-  //     });
+  });
 
-  //   }); // 'Shortening Links'
+  // TODO: write tests
+  describe('Database writing of new users', function() {
+    
+    xit('Does not write a new user to database if user has no associated phone number', function(done) {
+    
+    });
 
-  //   describe('With previously saved urls: ', function() {
+    xit('Writes a new user to database if user has valid phone number and googleID', function(done) {
 
-  //     beforeEach(function(done) {
-  //       link = new Link({
-  //         url: 'http://www.roflzoo.com/',
-  //         title: 'Funny pictures of animals, funny dog pictures',
-  //         base_url: 'http://127.0.0.1:4568',
-  //         visits: 0
-  //       })
+    });
 
-  //       link.save(function() {
-  //         done();
-  //       });
-  //     });
+  });
 
-  //     it('Returns the same shortened code if attempted to add the same URL twice', function(done) {
-  //       var firstCode = link.code
-  //       request(app)
-  //         .post('/links')
-  //         .send({
-  //           'url': 'http://www.roflzoo.com/'})
-  //         .expect(200)
-  //         .expect(function(res) {
-  //           var secondCode = res.body.code;
-  //           expect(secondCode).to.equal(firstCode);
-  //         })
-  //         .end(done);
-  //     });
+});
 
-  //     it('Shortcode redirects to correct url', function(done) {
-  //       var sha = link.code;
-  //       request(app)
-  //         .get('/' + sha)
-  //         .expect(302)
-  //         .expect(function(res) {
-  //           var redirect = res.headers.location;
-  //           expect(redirect).to.equal('http://www.roflzoo.com/');
-  //         })
-  //         .end(done);
-  //     });
+/* Handling Text Messages */
+describe('Text Messages:', function() {
+  
+  // Include a beforeEach and/or afterEach function if necessary
 
-  //   }); // 'With previously saved urls'
+  // TODO: write tests
+  describe('Server handling of new messages', function() {
+    
+    xit('Throws an error if message isn\'t comma separated', function(done) {
+    
+    });
 
-  // }); // 'Link creation'
+    xit('Throws an error if message has less than three answers', function(done) {
 
-  //acountcreation
+    });
 
-  // describe('Account Login:', function() {
+    xit('Throws an error if message has more than three answers', function(done) {
 
-  //   beforeEach(function(done) {
-  //     new User({
-  //         'username': 'Phillip',
-  //         'password': 'Phillip'
-  //     }).save(function() {
-  //       done();
-  //     });
-  //   });
+    });
 
-  //   it('Logs in existing users', function(done) {
-  //     request(app)
-  //       .post('/login')
-  //       .send({
-  //         'username': 'Phillip',
-  //         'password': 'Phillip' })
-  //       .expect(302)
-  //       .expect(function(res) {
-  //         expect(res.headers.location).to.equal('/');
-  //       })
-  //       .end(done);
-  //   });
+    xit('Throws an error if the first answer is not an integer', function(done) {
 
-  //   it('Users that do not exist are kept on login page', function(done) {
-  //     request(app)
-  //       .post('/login')
-  //       .send({
-  //         'username': 'Fred',
-  //         'password': 'Fred' })
-  //       .expect(302)
-  //       .expect(function(res) {
-  //         expect(res.headers.location).to.equal('/login');
-  //       })
-  //       .end(done)
-  //     });
+    });
 
-  // }); // Account Login
+    xit('Throws an error if the second answer is not "yes" or "no"', function(done) {
+
+    });
+
+    xit('Sends an affirmative text back if message is appropriately formatted', function(done) {
+
+    });
+
+  });
+
+  // TODO: write tests
+  describe('Parsing messages by type', function() {
+    
+    xit('Logs a verbose error message if message is inappropriately formatted', function(done) {
+    
+    });
+
+    xit('Parses message into an array of responses if message is properly formatted', function(done) {
+
+    });
+
+    xit('Recognizes when message requests a "Stop" action', function(done) {
+
+    });
+
+    xit('Recognizes when message requests a "Reset" action', function(done) {
+
+    });
+
+    xit('Recognizes when message requests a "Delete" action', function(done) {
+
+    });
+
+  });
+
+  // TODO: write tests
+  describe('Database writing of new messages', function() {
+    
+    xit('Does not write an improperly formatted message to database', function(done) {
+    
+    });
+
+    xit('Writes a properly formatted message to database', function(done) {
+
+    });
+
+    xit('Deletes a user if the message requests a "Delete" action', function(done) {
+
+    });
+
+    xit('Removes a user from textserve if the message requests a "Stop" action', function(done) {
+
+    });
+
+    xit('Adds a user to textserve if the message requests a "Restart" action', function(done) {
+
+    });
+
+  });
 
 });

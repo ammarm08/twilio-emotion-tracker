@@ -24,7 +24,7 @@ module.exports = function(app, passport) {
   });
 
   // DATA ROUTES
-  app.get('/api/users', function(req, res) {
+  app.get('/api/users', utils.checkUser, utils.checkUserRegistry, function(req, res) {
 
     utils.findOrCreateUser(req.user, function(err, user) {
       if (err) return res.status(404).json([]);
