@@ -21,7 +21,6 @@
 - [ ] [UI] Build React+Flux front-end
 - [ ] [UX] Revamp web app design
 - [ ] [Automation] Incorporate Travis for continuous deployment
-- [ ] [Deployment] Shift over to Docker? (just for funsies)
 - [ ] [UI] Allow user to edit/add/delete note for a given day
 - [ ] [Security] Build user panel where user can edit his account settings
 
