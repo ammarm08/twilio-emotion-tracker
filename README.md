@@ -17,7 +17,7 @@
 - ~~[UI] Tooltips: on hover, show a specific day's note + more details~~
 - ~~[Automation] Write build scripts to Browserify, bundle, and deploy app~~
 - ~~[Test] Write unit test suite for DB entries, Twilio endpoints, user auth~~
-- [ ] [UX] Give Sigmund a personality (curmudgeonly German philosopher)
+- ~~[UX] Give Sigmund a personality (curmudgeonly German philosopher)~~
 - [ ] [UI] Build React+Flux front-end
 - [ ] [UX] Revamp web app design
 - [ ] [Automation] Incorporate Travis for continuous deployment
