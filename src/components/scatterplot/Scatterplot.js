@@ -4,10 +4,11 @@ var Chart = require('./Chart');
 var DataSeries = require('./DataSeries');
 
 var Scatterplot = React.createClass({
+
   render: function() {
     return (
       <Chart width={this.props.width} height={this.props.height}>
-        <DataSeries data={[ 30, 10, 5, 8, 15, 10 ]} width={this.props.width} height={this.props.height} color="cornflowerblue" />
+        <DataSeries data={this.props.data} width={this.props.width} height={this.props.height} color="cornflowerblue" />
       </Chart>
     );
   }

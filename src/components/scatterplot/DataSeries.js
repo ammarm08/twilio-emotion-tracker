@@ -13,24 +13,32 @@ var DataSeries = React.createClass({
   render: function() {
     var props = this.props;
 
-    var yScale = d3.scale.linear()
-      .domain([0, d3.max(this.props.data)])
-      .range([0, this.props.height]);
+    var iso = d3.time.format.utc("%Y-%m-%dT%H:%M:%S.%LZ");
+    var readDate = d3.time.format("%Y-%m-%d");
+    var parseDate = iso.parse;
 
-    var xScale = d3.scale.ordinal()
-      .domain(d3.range(this.props.data.length))
-      .rangeRoundBands([0, this.props.width], 0.05);
+    var x = d3.time.scale.utc().range([0, this.props.width]);
+    var y = d3.scale.linear().range([this.props.height, 0]);
+
+    props.data.forEach(function(d) {
+      d.date = parseDate(d.date);
+      d.emotion = +d.emotion;
+    });
+
+    x.domain(d3.extent(props.data, function(d) { return d.date; }));
+    y.domain([0, 10]);
 
     var bubbles = this.props.data.map(function(point, i) {
       return (
-        <Bubble height={yScale(point)} width={xScale.rangeBand()} offset={xScale(i)} availableHeight={props.height} color={props.color} key={i} />
+        <Bubble r={10} cx={x(point.date)} cy={y(point.emotion)} key={i} />
       )
     });
 
     return (
-      <g>{bubbles}</g>
+      <g transform={"translate(50,30)"}>{bubbles}</g>
     );
   }
 });
+
 
 module.exports = DataSeries;

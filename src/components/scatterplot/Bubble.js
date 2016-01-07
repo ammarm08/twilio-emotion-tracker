@@ -11,9 +11,8 @@ var Bubble = React.createClass({
 
   render: function() {
     return (
-      <rect fill={this.props.color}
-        width={this.props.width} height={this.props.height} 
-        x={this.props.offset} y={this.props.availableHeight - this.props.height} />
+      <circle r={this.props.r}
+        cx={this.props.cx} cy={this.props.cy} />
     );
   }
 });
