@@ -40,7 +40,7 @@ var List = React.createClass({
             onClick={this.props.remove.bind(null, index)}>
           </span>
           <span style={styles.todoItem}>
-            {item}
+            {item.emotion}
           </span>
         </li>
       )

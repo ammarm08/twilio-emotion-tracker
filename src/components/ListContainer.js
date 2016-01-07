@@ -14,6 +14,7 @@ var ListContainer = React.createClass({
   //once component ready
   componentDidMount: function(){
     todoStore.addChangeListener(this._onChange);
+    todoActions.fetchDataFromServer();
   },
 
   //once component out

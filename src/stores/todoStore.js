@@ -19,6 +19,23 @@ var removeItem = function(index){
   _store.list.splice(index, 1);
 }
 
+var fetchData = function(callback){
+  $.ajax({
+    url: 'api/users',
+    success: function(data) {
+      //do stuff happy stuff!
+      _store.list = data;
+      console.log(data);
+      callback();
+    },
+    error: function(err) {
+      //do stuff sad stuff :(
+      console.log(err);
+      callback();
+    }
+  });
+}
+
 // CLONES & EXTENDS the EventEmitter prototype into something we can use
 var todoStore = objectAssign({}, EventEmitter.prototype, {
 
@@ -52,6 +69,11 @@ AppDispatcher.register(function(payload){
     case appConstants.REMOVE_ITEM:
       removeItem(action.data);
       todoStore.emit(CHANGE_EVENT);
+      break;
+    case appConstants.FETCH_DATA:
+      fetchData(function() {
+        todoStore.emit(CHANGE_EVENT);
+      });
       break;
     default:
       return true;

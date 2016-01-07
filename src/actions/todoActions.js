@@ -15,6 +15,13 @@ var todoActions = {
       actionType: appConstants.REMOVE_ITEM,
       data: index
     });
+  },
+  //redirects to dispatcher
+  fetchDataFromServer: function() {
+    AppDispatcher.handleAction({
+      actionType: appConstants.FETCH_DATA,
+      data: null
+    });
   }
 }
 
