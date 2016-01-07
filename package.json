@@ -8,7 +8,8 @@
     "build": "browserify ./src/App.js -o ./public/bundle.js",
     "server": "node server/server.js",
     "dev": "npm run test && nodemon server/server.js",
-    "test": "mocha"
+    "test": "mocha",
+    "buildtest": "gulp build && mongod && nodemon server/server.js"
   },
   "author": "",
   "license": "ISC",
@@ -17,16 +18,26 @@
     "browserify": "^12.0.1",
     "chai": "^3.4.1",
     "ejs": "^2.3.4",
+    "events": "^1.1.0",
     "express": "^4.13.3",
     "express-partials": "^0.3.0",
     "express-session": "^1.12.1",
+    "flux": "^2.1.1",
+    "gulp": "^3.9.0",
+    "gulp-notify": "^2.2.0",
     "mocha": "^2.3.4",
     "mongoose": "^4.3.4",
     "mongoose-auto-increment": "^5.0.1",
     "passport": "^0.3.2",
     "passport-google-oauth": "^0.2.0",
+    "react": "^0.14.6",
+    "react-dom": "^0.14.6",
+    "react-router": "^1.0.3",
+    "reactify": "^1.1.1",
     "serve-favicon": "^2.3.0",
     "supertest": "^1.1.0",
-    "twilio": "^2.8.0"
+    "twilio": "^2.8.0",
+    "vinyl-source-stream": "^1.1.0",
+    "watchify": "^3.6.1"
   }
 }
