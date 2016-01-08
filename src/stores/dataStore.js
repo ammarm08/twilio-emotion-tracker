@@ -11,33 +11,23 @@ var _store = {
   list: []
 };
 
-var addItem = function(item){
-  _store.list.push(item);
-};
-
-var removeItem = function(index){
-  _store.list.splice(index, 1);
-}
-
 var fetchData = function(callback){
   $.ajax({
     url: 'api/users',
     success: function(data) {
       //do stuff happy stuff!
       _store.list = data;
-      console.log(data);
       callback();
     },
     error: function(err) {
       //do stuff sad stuff :(
-      console.log(err);
-      callback();
+      callback(err);
     }
   });
 }
 
 // CLONES & EXTENDS the EventEmitter prototype into something we can use
-var todoStore = objectAssign({}, EventEmitter.prototype, {
+var dataStore = objectAssign({}, EventEmitter.prototype, {
 
   //on "change", do something
   addChangeListener: function(cb){
@@ -62,17 +52,9 @@ AppDispatcher.register(function(payload){
   // event emission triggers event listeners, which then
   // triggers the component to re-render if there's new data
   switch(action.actionType){
-    case appConstants.ADD_ITEM:
-      addItem(action.data);
-      todoStore.emit(CHANGE_EVENT);
-      break;
-    case appConstants.REMOVE_ITEM:
-      removeItem(action.data);
-      todoStore.emit(CHANGE_EVENT);
-      break;
     case appConstants.FETCH_DATA:
-      fetchData(function() {
-        todoStore.emit(CHANGE_EVENT);
+      fetchData(function(err) {
+        if (!err) dataStore.emit(CHANGE_EVENT);
       });
       break;
     default:
@@ -80,4 +62,4 @@ AppDispatcher.register(function(payload){
   }
 });
 
-module.exports = todoStore;
+module.exports = dataStore;
