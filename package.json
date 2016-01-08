@@ -6,6 +6,7 @@
   "scripts": {
     "start": "npm run server",
     "server": "node server/server.js",
+    "dev-server": "npm test && nodemon server/server.js",
     "test": "gulp build && mocha test/test.js && node seed/seed.js"
   },
   "author": "",
