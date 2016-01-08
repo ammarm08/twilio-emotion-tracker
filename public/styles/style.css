@@ -65,6 +65,10 @@ a {
 }
 
 a:hover {
+    text-decoration: none;
+}
+
+glyphicon:hover {
     color: #0074bf;
 }
 
@@ -76,11 +80,16 @@ Main > Scatterplot
 .axis line {
     fill: none;
     stroke: #191816;
+    stroke-width: 1;
     opacity: 0.1;
 }
 
+.tick {
+    z-index: 99;
+}
+
 circle {
-    fill: #809BCE;
+    fill: #2F3233;
     opacity: 0.5;
 }
 
@@ -124,10 +133,13 @@ hr {
 }
 
 .tooltip-chart {
-    background-color: steelblue;
+    background-color: #2F3233;
     height: 16px;
 }
 
 .data-emotion {
-    float:right;
+    color: #EDFBFF;
+    margin-left: 75%;
+    padding: 0;
+    font-size: 8pt;
 }

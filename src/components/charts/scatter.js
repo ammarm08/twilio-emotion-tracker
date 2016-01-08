@@ -28,13 +28,11 @@ var Scatterplot = React.createClass({
 
     var parseDate = d3.time.format.utc("%Y-%m-%dT%H:%M:%S.%LZ").parse;
 
-    // parse date and emotion attributes into usuable formats
     this.props.data.forEach(function(d) {
       d.date = parseDate(d.date);
       d.emotion = +d.emotion;
     });
 
-    // set the domain and range w/ the now updated data
     x.domain(d3.extent(this.props.data, function(d) { return d.date; }));
     y.domain([0, 10]);
 

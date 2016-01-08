@@ -35,7 +35,7 @@ var DataSeries = React.createClass({
     var points = this.props.data.map(function(point, i) {
       return (
         <circle 
-          r={8} 
+          r={6} 
           cx={x(point.date)} 
           cy={y(point.emotion)} 
           key={i} />
