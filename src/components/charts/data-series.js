@@ -10,14 +10,24 @@ var DataSeries = React.createClass({
   },
 
   setCircleHover: function(data) {
-    var readDate = d3.time.format("%Y-%m-%d");
-
+    var readDate = d3.time.format("%B %d, %Y");
     var tooltip = d3.select(".tooltip");
+
+    var renderTooltipChart = function(point) {
+      var width = (+point/10*100).toString() + "%";
+      var chart = '<div class="tooltip-chart" max-width=' + width + '>' + point + '</div>';
+      return '<div class="tooltip-chart-container">' + chart + '</div>';
+    };
+
     var tooltipTemplate = function(point) {
-      return '<span class="label">Date: </span>' + readDate(point.date) + '<br/>' +
-             '<span class="label">Emotion: </span>' + point.emotion + '<br/>' +
-             '<span class="label">Hydrated?: </span>' + point.hydrate + '<br/>' + 
-             '<span class="label">Note: </span>' + point.note + '<br/>'
+
+      var date = '<thead><tr><th>' + readDate(point.date) + '</th></tr></thead>';
+      var hr = '<tr><td><hr/></td></tr>';
+      var emotion = '<tr><td>' + renderTooltipChart(point.emotion) + '</td></tr>';
+      var hydration = '<tr><td>' + point.hydrate + '</td></tr>';
+      var note = '<tr><td>' + point.note + '</td></tr>';
+
+      return '<table><tbody>' + date + hr + emotion + hydration + note + '</tbody></table>';
     };
 
     d3.selectAll("circle").data(data)
