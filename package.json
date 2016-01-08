@@ -4,8 +4,7 @@
   "description": "",
   "main": "server/server.js",
   "scripts": {
-    "start": "npm run build && npm run server",
-    "build": "browserify ./src/App.js -o ./public/App.js",
+    "start": "gulp build && npm test && node seed/seed.js && npm run server",
     "server": "node server/server.js",
     "dev": "npm test && node seed/seed.js && nodemon server/server.js",
     "test": "mocha test/test.js"
