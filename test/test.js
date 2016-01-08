@@ -14,12 +14,11 @@ var utils = require('../server/utils.js');
 //       before running tests
 /////////////////////////////////////////////////////
 
-var testUser;
+var NAME = process.env.ADMIN_NAME || require('../config.js').test.name;
+var GOOGLEID = process.env.ADMIN_GOOGLEID || require('../config.js').test.googleid;
+var PHONE_NUMBER = process.env.ADMIN_NUM || require('../config.js').test.number;
 
-// FILL THESE OUT.
-var NAME = "YOUR_NAME";
-var GOOGLEID = parseInt("YOUR_GOOGLE_ID");
-var PHONE_NUMBER = "+1YOURNUMBERNOSPACES";
+
 
 /* Authentication and Authorization */
 describe('Priviledged Access:', function() {
@@ -139,33 +138,28 @@ describe('Text Messages:', function() {
         name: NAME,
         phone_number: PHONE_NUMBER
       };
-      testUser = new User(options);
-
-      testUser.save(function(err) {
-        if (!err) {
-          console.log('[PRE] Add test user to database.');
-          done();
-        }
-      });
+      new User(options).save();
+      done();
     });
 
     afterEach(function(done) {
-      request(app)
-      .get('/logout')
-      .end(function(err, res) {
-        Data.remove({}).exec();
-        User.remove({}).exec();
-        console.log('[POST] Remove all entries from test database.');
-        done();
-      });
+      Data.remove({}).exec();
+      User.remove({}).exec();
+      console.log('[POST] Remove all entries from test database.');
+      done();
     });
 
     it('Writes a properly formatted message to database', function(done) {
       var validMessage = "5, no, test";
       var parsed = utils.parseMessage(validMessage);
-      utils.writeData(testUser, parsed);
-      expect(testUser.children.length).to.equal(1);
-      done();
+
+      User.findOne({phone_number: PHONE_NUMBER}).exec(function(err, user) {
+        if (user) {
+          utils.writeData(user, parsed);
+          expect(user.children.length).to.equal(1);
+          done();
+        }
+      });
     });
 
     it('Deletes a user if the message requests a "Delete" action', function(done) {

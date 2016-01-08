@@ -2,25 +2,29 @@ var db = require('../server/db/database');
 var Data = require('../server/db/models').Data;
 var User = require('../server/db/models').User;
 
+var NAME = process.env.ADMIN_NAME || require('../config.js').test.name;
+var GOOGLEID = process.env.ADMIN_GOOGLEID || require('../config.js').test.googleid;
+var PHONE_NUMBER = process.env.ADMIN_NUM || require('../config.js').test.number;
+
+var dummyData = [];
+
 function randomDate(start, end) {
     return new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()))
 }
 
-var dummyData = [];
-
-// ADD YOUR INFO HERE
-var NAME = "YOUR_NAME";
-var GOOGLEID = parseInt("YOUR_GOOGLE_ID");
-var PHONE_NUMBER = "+1YOURNUMBERNOSPACES";
+//BLAST EXISTING COLLECTION
+Data.remove({}).exec();
+User.remove({}).exec();
 
 // create a new user
 new User({
   name: NAME,
   googleid: GOOGLEID,
   phone_number: PHONE_NUMBER
-}).save(function() {
-  //WOOHOO!
-});
+}).save(function(err) {
+  if (err) return db.close();
+  console.log('[CREATED] User: ' + NAME);
+})
 
 // build dummy data
 for (var i = 0; i < 20; i++) {
@@ -32,20 +36,26 @@ for (var i = 0; i < 20; i++) {
   dummyData.push(data);
 };
 
+console.log('[POPULATED] Dummy data array');
+
 // add each element in dummyData array to user's data collection
 User.findOne({googleid: GOOGLEID}, function(err, user) {
-  if (err) return console.error(err);
-
-  console.log(user);
+  if (err) {
+    console.error(err);
+    return db.close();
+  }
 
   for (var i = 0; i < dummyData.length; i++) {
     user.children.push(dummyData[i]);
   }
 
   user.save(function(err) {
-    if (err) return console.error(err);
-    console.log("Dummy data added!");
-    console.log(user.children);
+    if (err) {
+      console.error(err);
+      return db.close();
+    }
+    console.log("[CREATED] Dummy data for user: " + NAME);
+    db.close();
   });
 
 });
