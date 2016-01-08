@@ -1,10 +1,23 @@
+language: javascript
+
 language: node_js
 node_js:
+  - "4.2.1"
   - "4.1"
   - "4.0"
-  - "0.12"
-  - "0.11"
-  - "0.10"
-  - "0.8"
-  - "0.6"
-  - "iojs"
+
+services:
+  - mongodb
+
+before_script:
+  - sleep 15
+  - npm install -g gulp
+  - npm install -g gulp-notify
+  - npm install -g mocha
+  - npm install -g chai
+  - npm install -g supertest
+  - npm install -g browserify
+  - npm install -g reactify
+  - npm install -g vinyl-source-stream
+
+cache: false
