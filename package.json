@@ -5,11 +5,10 @@
   "main": "server/server.js",
   "scripts": {
     "start": "npm run build && npm run server",
-    "build": "browserify ./src/App.js -o ./public/bundle.js",
+    "build": "browserify ./src/App.js -o ./public/App.js",
     "server": "node server/server.js",
-    "dev": "npm run test && nodemon server/server.js",
-    "test": "mocha",
-    "buildtest": "gulp build && mongod && nodemon server/server.js"
+    "dev": "npm test && node seed/seed.js && nodemon server/server.js",
+    "test": "mocha test/test.js"
   },
   "author": "",
   "license": "ISC",

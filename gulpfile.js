@@ -14,17 +14,17 @@ function handleErrors() {
   this.emit('end'); // Keep gulp from hanging on this task
 }
 
-function buildScript(file, watch) {
+function buildScript(file, watcher) {
   var options = {
     entries: ['./src/' + file],
     transform: [reactify],
     debug: true,
     cache: {},
     packageCache: {},
-    plugin: [watchify]
+    plugin: watcher
   };
 
-  var bundler = watch ? watchify(options) : browserify(options);
+  var bundler = browserify(options);
 
   function rebundle() {
     var stream = bundler.bundle();
@@ -43,5 +43,9 @@ function buildScript(file, watch) {
 }
 
 gulp.task('build', function() {
-  return buildScript('App.js', false);
+  return buildScript('App.js', []);
 });
+
+gulp.task('watch', function() {
+  return buildScript('App.js', [watchify]);
+})
