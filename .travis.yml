@@ -10,7 +10,7 @@ services:
   - mongodb
 
 before_script:
-  - sleep 15
+  - sleep 5
   - npm install -g gulp
   - npm install -g gulp-notify
   - npm install -g mocha
