@@ -6,44 +6,55 @@ var DataSeries = React.createClass({
   //set hover event listeners on each circle as soon as 
   //component receives new props from parents
   componentDidUpdate: function() {
-    this.setCircleHover(this.props.data);
+    this.drawLines(this.props.scale.x, this.props.scale.y, this.props.data);
+    // this.setCircleHover(this.props.data);
   },
 
-  setCircleHover: function(data) {
+  drawLines: function(x, y, data) {
+    var line = d3.svg.line()
+    .x(function(d) { return x(d.date); })
+    .y(function(d) { return y(d.emotion); });
+
+    d3.select(".emotions")
+      .append("path")
+      .datum(data)
+      .attr("class", "line")
+      .attr("d", line);
+  },
+
+  // setCircleHover: function(data) {
     
-    var tooltip = d3.select(".tooltip");
+  //   var tooltip = d3.select(".tooltip");
 
-    d3.selectAll("circle").data(data)
-      .on("mouseover", function(d) {
-        tooltip.transition().duration(200).style("opacity", .9);
-        tooltip.html(helpers.templateTooltip(d))
-               .style("left", (d3.event.pageX + 20) + "px")
-               .style("top", (d3.event.pageY - 30) + "px");
-        var width = (d.emotion*10).toString();
-        d3.select(".tooltip-chart").style("width", width + "%");
-      })
-      .on("mouseout", function(d) {
-        tooltip.transition().duration(500).style("opacity", 0);
-      })
-  },
+  //   d3.selectAll("circle").data(data)
+  //     .on("mouseover", function(d) {
+  //       tooltip.transition().duration(200).style("opacity", .9);
+  //       tooltip.html(helpers.templateTooltip(d))
+  //              .style("left", (d3.event.pageX + 20) + "px")
+  //              .style("top", (d3.event.pageY - 30) + "px");
+  //       var width = (d.emotion*10).toString();
+  //       d3.select(".tooltip-chart").style("width", width + "%");
+  //     })
+  //     .on("mouseout", function(d) {
+  //       tooltip.transition().duration(500).style("opacity", 0);
+  //     })
+  // },
 
   render: function() {
 
-    var x = this.props.scale.x,
-        y = this.props.scale.y;
-
-    var points = this.props.data.map(function(point, i) {
-      return (
-        <circle 
-          r={6} 
-          cx={x(point.date)} 
-          cy={y(point.emotion)} 
-          key={i} />
-      )
-    });
+    // var points = this.props.data.map(function(point, i) {
+    //   return (
+    //     <g 
+    //       r={6} 
+    //       cx={x(point.date)} 
+    //       cy={y(point.emotion)} 
+    //       key={i} />
+    //   )
+    // });
 
     return (
-      <g transform={"translate(50,30)"}>{points}</g>
+      <g className="emotions">
+      </g>
     );
   }
 });

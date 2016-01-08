@@ -76,7 +76,7 @@ glyphicon:hover {
 Main > Scatterplot
 */
 
-.axis path,
+/*.axis path,
 .axis line {
     fill: none;
     stroke: #191816;
@@ -86,6 +86,23 @@ Main > Scatterplot
 
 .tick {
     z-index: 99;
+}*/
+
+.axis path,
+.axis line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+
+.x-axis path {
+  display: none;
+}
+
+.line {
+  fill: none;
+  stroke: steelblue;
+  stroke-width: 1.5px;
 }
 
 circle {
