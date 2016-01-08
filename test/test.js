@@ -18,8 +18,6 @@ var NAME = process.env.ADMIN_NAME || require('../config.js').test.name;
 var GOOGLEID = process.env.ADMIN_GOOGLEID || require('../config.js').test.googleid;
 var PHONE_NUMBER = process.env.ADMIN_NUM || require('../config.js').test.number;
 
-
-
 /* Authentication and Authorization */
 describe('Priviledged Access:', function() {
   beforeEach(function(done) {
