@@ -1,7 +1,7 @@
 
 body { 
     font-size: 12pt;
-    font-family: 'Crimson Text', serif;
+    font-family: 'Open Sans', sans-serif;
 }
 
 
@@ -72,12 +72,6 @@ a:hover {
 Main > Scatterplot
 */
 
-path { 
-    stroke: steelblue;
-    stroke-width: 2;
-    fill: none;
-}
-
 .axis path,
 .axis line {
     fill: none;
@@ -98,7 +92,7 @@ div.tooltip {
     padding: 4px;       
     background: white; 
     font-size: 12pt;
-    font-family: "Crimson Text", serif;
+    font-family: 'Open Sans', sans-serif;
     border: 1pt solid black;  
     box-shadow: 5px 5px 2px #888888;  
     pointer-events: none;     
@@ -108,5 +102,5 @@ div.tooltip {
     color: black;
     font-weight: bold;
     font-size: 12pt;
-    font-family: "Crimson Text", serif;
+    font-family: 'Open Sans', sans-serif;
 }

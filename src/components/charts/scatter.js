@@ -4,21 +4,21 @@ var DataSeries = require('./data-series');
 
 var Scatterplot = React.createClass({
 
-  renderAxes: function(x, y, height) {
-    var xAxis = d3.svg.axis().scale(x)
-                  .orient("bottom").ticks(5);
+  componentDidMount: function() {
+    this.renderAxes(this.props.axis.x, this.props.axis.y, this.props.height);
+  },
 
-    var yAxis = d3.svg.axis().scale(y)
-                  .orient("left").ticks(5);
-
+  renderAxes: function(xAxis, yAxis, height) {
+    
     d3.select("svg").append("g")
-      .attr("class", "x axis")
+      .attr("class", "axis")
       .attr("transform", "translate(0," + height + ")")
       .call(xAxis);
 
     d3.select("svg").append("g")
-      .attr("class", "y axis")
+      .attr("class", "axis")
       .call(yAxis);
+
   },
 
   render: function() {
@@ -37,8 +37,6 @@ var Scatterplot = React.createClass({
     // set the domain and range w/ the now updated data
     x.domain(d3.extent(this.props.data, function(d) { return d.date; }));
     y.domain([0, 10]);
-
-    this.renderAxes(x, y, this.props.height);
 
     return (
       <g>

@@ -6,39 +6,47 @@ var dataStore = require('../stores/dataStore');
 var dataActions = require('../actions/dataActions');
 
 var ChartContainer = React.createClass({
-  // on initial load
+
   getInitialState: function(){
     return {
       data: dataStore.getList()
     }
   },
 
-  //once component ready
   componentDidMount: function(){
     dataStore.addChangeListener(this._onChange);
     dataActions.fetchDataFromServer();
+    this.renderTooltip();
   },
 
-  //once component out
   componentWillUnmount: function(){
     dataStore.removeChangeListener(this._onChange);
   },
 
-  //what component does after dispatcher emits change event
   _onChange: function(){
     this.setState({
       data: dataStore.getList()
     });
   },
 
+  renderTooltip: function(data) {
+    var tooltip = d3.select("body")
+                    .append("div")  
+                    .attr("class", "tooltip")            
+                    .style("opacity", 0);            
+  },
+
   render: function() {
 
     // REWRITE IN SEMANTIC REACT --> defaults for x and y scales + width/height
-    var width = 800,
-        height = 500,
+    var margin = {top: 30, right: 20, bottom: 30, left: 50},
+        width = 800 - margin.left - margin.right,
+        height = 500 - margin.top - margin.bottom,
         x = d3.time.scale.utc().range([0, width]),
-        y = d3.scale.linear().range([height, 0]);
-
+        y = d3.scale.linear().range([height, 0]),
+        xAxis = d3.svg.axis().scale(x).orient("bottom").ticks(5),
+        yAxis = d3.svg.axis().scale(y).orient("left").ticks(5);
+                          
     return (
       <Chart className="chart" width={width} height={height}>
         < Scatterplot 
@@ -46,7 +54,8 @@ var ChartContainer = React.createClass({
           data={this.state.data}
           width={width}
           height={height} 
-          scale={{x: x, y: y}}/>
+          scale={{x: x, y: y}}
+          axis={{x: xAxis, y: yAxis}}/>
       </Chart>
     )
   }
