@@ -23,7 +23,12 @@ Landing Page
 }
 
 #iphone-mock {
-    margin-top: 50px;
+    margin-top: 10px;
+}
+
+#iphone-mock img {
+    width: 700px;
+
 }
 
 #demo-link {
