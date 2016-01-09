@@ -101,13 +101,18 @@ Main > Scatterplot
 
 .line {
   fill: none;
-  stroke: steelblue;
-  stroke-width: 1.5px;
+  stroke: #2F3233;
+  stroke-width: 2px;
+  opacity: 0.8;
 }
 
 circle {
     fill: #2F3233;
     opacity: 0.5;
+}
+
+g text {
+    font-size: 8pt;
 }
 
 div.tooltip { 

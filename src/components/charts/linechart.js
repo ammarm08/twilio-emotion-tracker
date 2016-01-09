@@ -2,7 +2,7 @@ var React = require('react');
 var d3 = require('d3');
 var DataSeries = require('./data-series');
 
-var Scatterplot = React.createClass({
+var Linechart = React.createClass({
 
   componentDidUpdate: function() {
     var x = this.props.scale.x,
@@ -18,7 +18,8 @@ var Scatterplot = React.createClass({
     helpers.formatData(data);
     helpers.setDomain(x, y, data);
 
-    this.renderAxes(xAxis, yAxis, height);    
+    this.renderAxes(xAxis, yAxis, height);  
+    this.renderPoints(x, y, data);  
     this.renderPath(data, line);
   },
 
@@ -47,10 +48,22 @@ var Scatterplot = React.createClass({
       .attr("d", line);
   },
 
+  renderPoints: function(x, y, data) {
+    d3.select(".chart-container").append("g").attr("class", "points")
+      .selectAll("circle")
+      .data(data)
+      .enter().append("circle")
+      .attr("class", "dot")
+      .attr("r", 4)
+      .attr("cx", function(d) {return x(d.date)})
+      .attr("cy", function(d) {return y(d.emotion)});
+  },
+
   render: function() {
+
     return (
-      <g className="chart-container" 
-        transform={"translate(" + this.props.margin.left + "," + this.props.margin.top + ")"} />
+      <g className="chart-container" transform={"translate(" + this.props.margin.left + "," + this.props.margin.top + ")"}>
+      </g>
     );
   }
 
@@ -70,8 +83,13 @@ var helpers = {
       d.date = parseDate(d.date);
       d.emotion = +d.emotion;
     });
+
+    data.sort(function(a, b) {
+      return a.date - b.date;
+    });
+
   }
 
 };
 
-module.exports = Scatterplot;
+module.exports = Linechart;

@@ -1,7 +1,7 @@
 var React = require('react');
 var d3 = require('d3');
 var Chart = require('./charts/chart');
-var LineChart = require('./charts/scatter');
+var LineChart = require('./charts/linechart');
 var dataStore = require('../stores/dataStore');
 var dataActions = require('../actions/dataActions');
 
