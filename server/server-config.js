@@ -1,12 +1,15 @@
 var express = require('express');
 var app = express();
-var passport = require('./auth/auth-strategy.js');
+var port = process.env.PORT || 3000;
 
+// LOAD MIDDLEWARE
+var passport = require('./auth/auth-strategy.js');
 var partials = require('express-partials');
 var session = require('express-session');
 var bodyParser = require('body-parser');
 var favicon = require('serve-favicon');
 
+// CONFIGURE EXPRESS SERVER INSTANCE
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.set('views', __dirname + '/../public/views');
@@ -20,5 +23,10 @@ app.use(favicon("./public/images/favicon.ico"));
 
 // INITIALIZE ROUTES
 require('./routes/routes')(app, passport);
+
+// START SERVER
+app.listen(port, function() {
+  console.log('Listening on:' + port);
+});
 
 module.exports = app;
