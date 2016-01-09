@@ -9,30 +9,29 @@
   <script src="http://d3js.org/d3.v3.min.js"></script>
 </head>
 <body>
-
-  <div class="row">
-    <div class="container">
-      <h1>sigmund</h1>
-    </div>
-  </div>
-
-  <div class="row">
-    <div class="container">
-
-      <div class="col-sm-3">
-        <ul class="list-group" id="sidenav">
-          <li><a href="#"><i class="glyphicon glyphicon-home"></i>  Home</a></li>
-          <li><a href="#"><i class="glyphicon glyphicon-cog"></i>  Settings</a></li>
-          <li><a href="/login"><i class="glyphicon glyphicon-off"></i>  Log Out</a></li>
-        </ul>
+<div class="main-container">
+    <div class="nav">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="/">sigmund</a>
+        </div>
       </div>
-      
-      <div class="col-sm-9">
-        <div id="demo"></div>
-      </div>
-
     </div>
-  </div>
+
+    <div class="row">
+        <div class="col-sm-1">
+          <ul class="list-group" id="sidenav">
+            <li><a href="#"><i class="glyphicon glyphicon-home"></i>  Home</a></li>
+            <li><a href="#"><i class="glyphicon glyphicon-cog"></i>  Settings</a></li>
+            <li><a href="/login"><i class="glyphicon glyphicon-off"></i>  Log Out</a></li>
+          </ul>
+        </div>
+        
+        <div class="col-sm-9">
+          <div id="demo"></div>
+        </div>
+    </div>
+</div>
   <script src="/../App.js"></script>
 </body>
 </html>

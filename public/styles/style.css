@@ -2,6 +2,7 @@
 body { 
     font-size: 12pt;
     font-family: 'Open Sans', sans-serif;
+    background-color: #f1f1f1;
 }
 
 
@@ -15,7 +16,7 @@ Landing Page
 }
 
 #tagline {
-    margin-top: 200px;
+    margin-top: 175px;
 }
 
 #tagline button {
@@ -23,7 +24,6 @@ Landing Page
 }
 
 #iphone-mock {
-    margin-top: 10px;
 }
 
 #iphone-mock img {
@@ -61,28 +61,44 @@ Complete Sign-Up Page
 Main > Navbar
 */
 
+.main-container {
+    height: 700px;
+}
+
 #header {
     margin: auto 50px;
 }
 
+.nav, #sidenav {
+    background-color: white;
+    border: 1pt solid;
+    border-color: #EEE #DDD #CCC;
+}
+
+
 #sidenav {
-    margin-top: 50px;
-    width: 120px;
+    height: 100%;
+    position: fixed;
+    padding-top: 10px;
 }
 
 #sidenav li {
     border: none;
     list-style-type: none;
-    padding: 10px;
+    padding: 10px 20px;
+    margin: 10px auto;
+    font-size: 10pt;
 }
 
 a {
     color: #222222;
     text-decoration: none;
+    font-weight: bold;
 }
 
 a:hover {
     text-decoration: none;
+    font-weight: bold;
 }
 
 glyphicon:hover {
@@ -92,6 +108,13 @@ glyphicon:hover {
 /*
 Main > Linechart
 */
+
+svg {
+    margin-top: 20px;
+    background-color: white;
+    border: 1pt solid;
+    border-color: #EEE #DDD #CCC
+}
 
 .axis path,
 .axis line {
