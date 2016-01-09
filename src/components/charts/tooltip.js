@@ -4,15 +4,12 @@ var d3 = require('d3');
 var Tooltip = React.createClass({
 
   componentDidUpdate: function() {
-    console.log("it did update");
     this.showOnHover(this.props.data);
   },
 
   showOnHover: function(data) {
 
     var tooltip = d3.select(".tooltip");
-    console.log("it made it through.");
-    console.log("here be the tooltip", tooltip);
 
     d3.selectAll("circle").data(data)
       .on("mouseover", function(d) {
@@ -44,8 +41,8 @@ var helpers = {
     var date = '<thead><tr><th>' + readDate(point.date) + '</th></tr></thead>';
     var hr = '<tr><td><hr/></td></tr>';
     var emotion = '<tr><td>' + helpers.renderTooltipChart(point.emotion) + '</td></tr>';
-    var hydration = '<tr><td>' + point.hydrate + '</td></tr>';
-    var note = '<tr><td>' + point.note + '</td></tr>';
+    var hydration = '<tr><td class="tooltip-label">Hydrated? :</td><td>' + point.hydrate + '</td></tr>';
+    var note = '<tr><td class="tooltip-label">Note : </td><td>' + point.note + '</td></tr>';
 
     return '<table><tbody>' + date + hr + emotion + hydration + note + '</tbody></table>';
   },

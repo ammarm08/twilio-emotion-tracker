@@ -73,26 +73,15 @@ glyphicon:hover {
 }
 
 /*
-Main > Scatterplot
+Main > Linechart
 */
-
-/*.axis path,
-.axis line {
-    fill: none;
-    stroke: #191816;
-    stroke-width: 1;
-    opacity: 0.1;
-}
-
-.tick {
-    z-index: 99;
-}*/
 
 .axis path,
 .axis line {
   fill: none;
-  stroke: #000;
+  stroke: #191816;
   shape-rendering: crispEdges;
+  opacity: 0.1;
 }
 
 .x-axis path {
@@ -120,6 +109,10 @@ g text {
     font-size: 8pt;
 }
 
+/*
+Main > Tooltip
+*/
+
 div.tooltip { 
     position: absolute;     
     width: 175px;          
@@ -128,7 +121,15 @@ div.tooltip {
     font-size: 10pt;
     font-family: 'Open Sans', sans-serif;
     border: 1pt solid #DFE0E2;
+    border-radius: 4px;
     pointer-events: none;     
+}
+
+.tooltip-label {
+    font-weight: bold;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 10pt;
+    color: black;
 }
 
 table {
@@ -140,10 +141,7 @@ table {
 td {
     width: 100%;
     display: block;
-}
-
-tr {
-    margin: 20px;
+    padding: 4px;
 }
 
 th {
