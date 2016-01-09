@@ -1,6 +1,8 @@
 # Sigmund #
 ### A curmudgeonly old professor sending you a daily reminder to track your emotional well-being ###
 
+![Alt text](sigmund.gif "Sigmund's Walkthrough")
+
 - Respond to text: "On a scale of 1-10, how was your day?"
 - Include some more qualitative info (did you hydrate? anything notable happen today?)
 - Respond to this text every day
