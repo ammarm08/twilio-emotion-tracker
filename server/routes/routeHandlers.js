@@ -20,6 +20,10 @@ exports.renderComplete = function(req, res) {
   res.render('complete', req.user);
 }
 
+exports.renderDemo = function(req, res) {
+  res.render('demo');
+}
+
 exports.addUserNumber = function(req, res, next) {
 
   if (!validPhoneNumberFormat(req.body.phone_number)) {

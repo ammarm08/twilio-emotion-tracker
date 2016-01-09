@@ -15,12 +15,23 @@ var fetchData = function(callback){
   $.ajax({
     url: 'api/users',
     success: function(data) {
-      //do stuff happy stuff!
       _store.list = data;
-      callback();
+      callback(null);
     },
     error: function(err) {
-      //do stuff sad stuff :(
+      callback(err);
+    }
+  });
+}
+
+var fetchDemo = function(callback){
+  $.ajax({
+    url: 'api/demo',
+    success: function(data) {
+      _store.list = data;
+      callback(null);
+    },
+    error: function(err) {
       callback(err);
     }
   });
@@ -54,6 +65,11 @@ AppDispatcher.register(function(payload){
   switch(action.actionType){
     case appConstants.FETCH_DATA:
       fetchData(function(err) {
+        if (!err) dataStore.emit(CHANGE_EVENT);
+      });
+      break;
+    case appConstants.FETCH_DEMO:
+      fetchDemo(function(err) {
         if (!err) dataStore.emit(CHANGE_EVENT);
       });
       break;

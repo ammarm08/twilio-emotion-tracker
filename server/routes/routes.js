@@ -1,6 +1,7 @@
 var twilio = require('../twilio');
 var utils = require('../utils');
 var handlers = require('./routeHandlers');
+var demoData = require('../demo/demoData');
 
 module.exports = function(app, passport) {
 
@@ -9,6 +10,7 @@ module.exports = function(app, passport) {
   app.post('/complete', utils.checkUser, handlers.addUserNumber);
   app.get('/login', handlers.renderLogin);
   app.get('/logout', handlers.logout);
+  app.get('/demo', handlers.renderDemo);
 
   // OAUTH ROUTES
   app.get('/auth/google',
@@ -32,7 +34,15 @@ module.exports = function(app, passport) {
       res.status(200).json(results);
     });
 
-  }) 
+  });
+
+  app.get('/api/demo', function(req, res) {
+
+    demoData(function(data) {
+      res.status(200).json(data);
+    });
+
+  });
 
   // TWILIO ROUTES
   app.post('/api/messages', function(req, res) {

@@ -8,6 +8,12 @@ var dataActions = {
       actionType: appConstants.FETCH_DATA,
       data: null
     });
+  },
+  fetchDemoData: function() {
+    AppDispatcher.handleAction({
+      actionType: appConstants.FETCH_DEMO,
+      data: null
+    });
   }
 }
 
