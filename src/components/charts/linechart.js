@@ -1,9 +1,12 @@
 var React = require('react');
 var d3 = require('d3');
-// var Tooltip = require('./tooltip');
 var LineChart = React.createClass({
 
+  // if this component's props ever change, that is our
+  // signal to render our chart
   componentDidUpdate: function() {
+
+    // D3 -- configuration + line-drawing function to specify x-y coordinate pairs
     var x = this.props.scale.x,
         y = this.props.scale.y,
         xAxis = this.props.axis.x,
@@ -14,9 +17,11 @@ var LineChart = React.createClass({
           .x(function(d) { return x(d.date); })
           .y(function(d) { return y(d.emotion); });
 
+    // parse our data so D3 can use it
     helpers.formatData(data);
     helpers.setDomain(x, y, data);
 
+    // render everything
     this.renderAxes(xAxis, yAxis, height);    
     this.renderPath(data, line);
     this.renderPoints(x, y, data);

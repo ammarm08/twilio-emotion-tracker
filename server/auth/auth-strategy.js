@@ -1,3 +1,5 @@
+//See Passport docs: https://github.com/jaredhanson/passport-google-oauth
+
 var passport = require('passport');
 var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 var clientID = process.env.CLIENT_ID || require('../../config.js').google.clientID;

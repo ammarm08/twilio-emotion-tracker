@@ -2,6 +2,8 @@ var db = require('../server/db/database');
 var Data = require('../server/db/models').Data;
 var User = require('../server/db/models').User;
 
+// This script is used to populate your testing database with a user + 10 data points
+
 var NAME = process.env.ADMIN_NAME || require('../config.js').test.name;
 var GOOGLEID = process.env.ADMIN_GOOGLEID || require('../config.js').test.googleid;
 var PHONE_NUMBER = process.env.ADMIN_NUM || require('../config.js').test.number;

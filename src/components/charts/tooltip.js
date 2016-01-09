@@ -3,6 +3,9 @@ var d3 = require('d3');
 
 var Tooltip = React.createClass({
 
+  // once this componenet's props change,
+  // we set up our hover event listeners
+  // on all "circle" elements in the graph
   componentDidUpdate: function() {
     this.showOnHover(this.props.data);
   },
@@ -17,6 +20,10 @@ var Tooltip = React.createClass({
         tooltip.html(helpers.templateTooltip(d))
                .style("left", (d3.event.pageX - 400) + "px")
                .style("top", (d3.event.pageY - 30) + "px");
+
+        // set the bar graph width to be proportional to what a user
+        // rated as his day emotionally (scale of 0 to 10). 
+        // ex. 6 -> width: 60%
         var width = (d.emotion*10).toString();
         d3.select(".tooltip-chart").style("width", width + "%");
       })
@@ -35,6 +42,7 @@ var Tooltip = React.createClass({
 
 var helpers = {
 
+  // renders the inner formatting of the tooltip div
   templateTooltip: function(point) {
     var readDate = d3.time.format("%B %d, %Y");
 
@@ -47,6 +55,7 @@ var helpers = {
     return '<table><tbody>' + date + hr + emotion + hydration + note + '</tbody></table>';
   },
 
+  // renders a mini bar chart in the tooltip
   renderTooltipChart: function(point) {
     var data = '<span class="data-emotion">' + point + '</span>';
     var chart = '<div class="tooltip-chart">' + data + '</div>';

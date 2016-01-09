@@ -8,6 +8,9 @@ var Tooltip = require('./charts/tooltip');
 var dataStore = require('../stores/dataStore');
 var dataActions = require('../actions/dataActions');
 
+// this component does the same exact thing as ChartContainer,
+// the only difference being that it invokes fetchDemoData (logged-out experience)
+// rather than fetchDataFromServer (which relies on having a logged-in user)
 var DemoContainer = React.createClass({
 
   getInitialState: function(){
@@ -40,10 +43,6 @@ var DemoContainer = React.createClass({
         y = d3.scale.linear().range([height,0]),
         xAxis = d3.svg.axis().scale(x).orient("bottom").ticks(10),
         yAxis = d3.svg.axis().scale(y).orient("left").ticks(10);
-
-    var line = d3.svg.line()
-      .x(function(d) { return x(d.date); })
-      .y(function(d) { return y(d.emotion); });
                           
     return (
       <Chart className="chart" width={width + margin.left + margin.right} height={height + margin.top + margin.bottom}>
@@ -54,8 +53,7 @@ var DemoContainer = React.createClass({
             height={height} 
             margin={margin}
             scale={{x: x, y: y}}
-            axis={{x: xAxis, y: yAxis}}
-            line={line} />
+            axis={{x: xAxis, y: yAxis}} />
         <Tooltip 
             data={this.state.data}
             opacity={0} />

@@ -1,7 +1,7 @@
 var request = require('supertest');
 var express = require('express');
 var expect = require('chai').expect;
-var app = require('../server/server-config.js');
+var app = require('../server/server.js');
 
 var db = require('../server/db/database');
 var Data = require('../server/db/models').Data;

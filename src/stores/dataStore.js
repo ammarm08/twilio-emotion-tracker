@@ -6,7 +6,6 @@ var EventEmitter = require('events').EventEmitter;
 //global constant
 var CHANGE_EVENT = 'change';
 
-// temp "database" and methods to interact w/ it
 var _store = {
   list: []
 };
@@ -24,6 +23,7 @@ var fetchData = function(callback){
   });
 }
 
+// for when logged-out users want to demo the app
 var fetchDemo = function(callback){
   $.ajax({
     url: 'api/demo',
@@ -37,7 +37,7 @@ var fetchDemo = function(callback){
   });
 }
 
-// CLONES & EXTENDS the EventEmitter prototype into something we can use
+// Data store can now emit events
 var dataStore = objectAssign({}, EventEmitter.prototype, {
 
   //on "change", do something
@@ -55,13 +55,12 @@ var dataStore = objectAssign({}, EventEmitter.prototype, {
   },
 });
 
-// actually register the dispatcher to do stuff in relation to the store.
 AppDispatcher.register(function(payload){
   var action = payload.action;
 
-  // on a given action, do the action and emit an event.
-  // event emission triggers event listeners, which then
-  // triggers the component to re-render if there's new data
+  // where the magic happens. when the dispatcher receives an action,
+  // it interacts with the dataStore. the dataStore performs an action
+  // and then emits a change event that triggers activity in our React components
   switch(action.actionType){
     case appConstants.FETCH_DATA:
       fetchData(function(err) {

@@ -1,13 +1,16 @@
 {
-  "name": "twilio-node",
+  "name": "sigmund-emotion-tracker",
   "version": "1.0.0",
   "description": "",
   "main": "server/server.js",
   "scripts": {
     "start": "gulp build && npm run server",
     "server": "node server/server.js",
-    "dev-server": "npm test && nodemon server/server.js",
-    "test": "gulp build && mocha test/test.js && node seed/seed.js"
+    "watch": "gulp watch & nodemon server/server.js",
+
+    "dev-server": "gulp build && nodemon server/server.js",
+    "test": "gulp build && mocha test/test.js && node seed/seed.js",
+    "prewatch": "mocha test/test.js && node seed/seed.js"
   },
   "author": "",
   "license": "ISC",

@@ -1,6 +1,5 @@
 var express = require('express');
 var app = express();
-var port = process.env.PORT || 3000;
 
 // LOAD MIDDLEWARE
 var passport = require('./auth/auth-strategy.js');
@@ -23,10 +22,5 @@ app.use(favicon("./public/images/favicon.ico"));
 
 // INITIALIZE ROUTES
 require('./routes/routes')(app, passport);
-
-// START SERVER
-app.listen(port, function() {
-  console.log('Listening on:' + port);
-});
 
 module.exports = app;

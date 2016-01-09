@@ -27,13 +27,18 @@ var Demo = React.createClass({
   }
 });
 
+// this works as our defacto router.
+// a different component is rendered depending on
+// which id tags are found on that page.
 window.onload = function() {
 
+  // "/"
   var reactLineChart = document.getElementById("app");
   if (reactLineChart) {
     render(<App />, reactLineChart);
   }
 
+  // "/demo"
   var demoLineChart = document.getElementById("demo");
   if (demoLineChart) {
     render(<Demo />, demoLineChart);
