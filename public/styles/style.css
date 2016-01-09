@@ -40,7 +40,7 @@ h1 {
 }
 
 /*
-Complete
+Complete Sign-Up Page
 */
 
 .flash-error {
@@ -51,6 +51,10 @@ Complete
 #phone-entry {
     width: 250px;
     margin: 100px auto;
+}
+
+.name-group {
+    margin-top: 20px;
 }
 
 /*

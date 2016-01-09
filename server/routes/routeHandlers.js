@@ -1,7 +1,7 @@
 var utils = require('../utils');
 var twilio = require('../twilio');
 
-var WELCOME_MESSAGE = "Thanks for signing up for the emotion tracker! We will be sending you a daily text to remind you to record your data, as well as instructions as to how we need your text to be formatted. Happy self improving!";
+var WELCOME_MESSAGE = "Hello, this is Sigmund. I commend you for prioritizing your health. Expect a daily message from me to remind you to record your data. All you need to do is follow the instructions. Happy self-improving!";
 
 exports.renderIndex = function(req, res) {
   res.render('index');
