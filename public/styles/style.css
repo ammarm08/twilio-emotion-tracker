@@ -107,8 +107,13 @@ Main > Scatterplot
 }
 
 circle {
+    fill: white;
+    stroke: #2F3233;
+    stroke-width: 2px;
+}
+
+circle:hover {
     fill: #2F3233;
-    opacity: 0.5;
 }
 
 g text {

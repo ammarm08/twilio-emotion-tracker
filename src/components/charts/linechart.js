@@ -1,8 +1,7 @@
 var React = require('react');
 var d3 = require('d3');
-var DataSeries = require('./data-series');
-
-var Linechart = React.createClass({
+// var Tooltip = require('./tooltip');
+var LineChart = React.createClass({
 
   componentDidUpdate: function() {
     var x = this.props.scale.x,
@@ -18,9 +17,9 @@ var Linechart = React.createClass({
     helpers.formatData(data);
     helpers.setDomain(x, y, data);
 
-    this.renderAxes(xAxis, yAxis, height);  
-    this.renderPoints(x, y, data);  
+    this.renderAxes(xAxis, yAxis, height);    
     this.renderPath(data, line);
+    this.renderPoints(x, y, data);
   },
 
   renderAxes: function(xAxis, yAxis, height) {
@@ -54,13 +53,12 @@ var Linechart = React.createClass({
       .data(data)
       .enter().append("circle")
       .attr("class", "dot")
-      .attr("r", 4)
+      .attr("r", 8)
       .attr("cx", function(d) {return x(d.date)})
       .attr("cy", function(d) {return y(d.emotion)});
   },
 
   render: function() {
-
     return (
       <g className="chart-container" transform={"translate(" + this.props.margin.left + "," + this.props.margin.top + ")"}>
       </g>
@@ -87,9 +85,8 @@ var helpers = {
     data.sort(function(a, b) {
       return a.date - b.date;
     });
-
   }
 
 };
 
-module.exports = Linechart;
+module.exports = LineChart;

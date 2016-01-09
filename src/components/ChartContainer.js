@@ -1,7 +1,10 @@
 var React = require('react');
 var d3 = require('d3');
+
 var Chart = require('./charts/chart');
 var LineChart = require('./charts/linechart');
+var Tooltip = require('./charts/tooltip');
+
 var dataStore = require('../stores/dataStore');
 var dataActions = require('../actions/dataActions');
 
@@ -16,7 +19,6 @@ var ChartContainer = React.createClass({
   componentDidMount: function(){
     dataStore.addChangeListener(this._onChange);
     dataActions.fetchDataFromServer();
-    this.renderTooltip();
   },
 
   componentWillUnmount: function(){
@@ -29,16 +31,8 @@ var ChartContainer = React.createClass({
     });
   },
 
-  renderTooltip: function(data) {
-    var tooltip = d3.select("body")
-                    .append("div")  
-                    .attr("class", "tooltip")            
-                    .style("opacity", 0);            
-  },
-
   render: function() {
 
-    // REWRITE IN SEMANTIC REACT --> defaults for x and y scales + width/height
     var margin = {top: 20, right: 20, bottom: 30, left: 50},
         width = 800 - margin.left - margin.right,
         height = 500 - margin.top - margin.bottom,
@@ -54,14 +48,17 @@ var ChartContainer = React.createClass({
     return (
       <Chart className="chart" width={width + margin.left + margin.right} height={height + margin.top + margin.bottom}>
         < LineChart 
-          className="line-chart" 
-          data={this.state.data}
-          width={width}
-          height={height} 
-          margin={margin}
-          scale={{x: x, y: y}}
-          axis={{x: xAxis, y: yAxis}}
-          line={line} />
+            className="line-chart" 
+            data={this.state.data}
+            width={width}
+            height={height} 
+            margin={margin}
+            scale={{x: x, y: y}}
+            axis={{x: xAxis, y: yAxis}}
+            line={line} />
+        <Tooltip 
+            data={this.state.data}
+            opacity={0} />
       </Chart>
     )
   }
