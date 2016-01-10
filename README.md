@@ -40,7 +40,7 @@ npm run dev-server
 - ~~[Test] Write unit test suite for DB entries, Twilio endpoints, user auth~~
 - ~~[UX] Give Sigmund a personality (curmudgeonly German philosopher)~~
 - ~~[UI] Build React+Flux front-end~~
-- [ ] [UX] Revamp web app design
+- ~~[UX] Revamp web app design~~
 - ~~[Automation] Incorporate Travis for continuous deployment~~
 - [ ] [UI] Allow user to edit/add/delete note for a given day
 - [ ] [Security] Build user panel where user can edit his account settings
