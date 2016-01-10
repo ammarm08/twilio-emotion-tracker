@@ -31,6 +31,8 @@ function randomDate(start, end) {
 
 module.exports = function(callback) {
   // build dummy data
+  var responseData;
+
   for (var i = 0; i < 20; i++) {
     var data = {};
     data.emotion = parseInt(Math.random() * 11);
@@ -45,6 +47,11 @@ module.exports = function(callback) {
     dummyData.push(data);
   };
 
-  return callback(dummyData);
+  // doing this clears dummyData so that each time a client asks for dummyData,
+  // he gets a new set of 20 data points. 
+  responseData = dummyData.map(function(item) {return item});
+  dummyData = [];
+  
+  return callback(responseData);
 }
 
