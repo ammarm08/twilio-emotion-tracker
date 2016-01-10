@@ -18,7 +18,7 @@ var Tooltip = React.createClass({
       .on("mouseover", function(d) {
         tooltip.transition().duration(500).style("opacity", .9);
         tooltip.html(helpers.templateTooltip(d))
-               .style("left", (d3.event.pageX - 400) + "px")
+               .style("left", (d3.event.pageX - 150) + "px")
                .style("top", (d3.event.pageY - 30) + "px");
 
         // set the bar graph width to be proportional to what a user
@@ -58,8 +58,8 @@ var helpers = {
   // renders a mini bar chart in the tooltip
   renderTooltipChart: function(point) {
     var data = '<span class="data-emotion">' + point + '</span>';
-    var chart = '<div class="tooltip-chart">' + data + '</div>';
-    return '<div class="tooltip-chart-container">' + chart + '</div>';
+    var chart = '<div class="tooltip-chart"></div>';
+    return '<div class="tooltip-chart-container">' + chart + data + '</div>';
   }
 
 };

@@ -2,9 +2,17 @@
 body { 
     font-size: 12pt;
     font-family: 'Open Sans', sans-serif;
+}
+
+.main-container {
+    height: 720px;
     background-color: #f1f1f1;
 }
 
+.navbar-brand {
+    color: #6a67ce;
+    letter-spacing: -1.2px;
+}
 
 /*
 Landing Page
@@ -23,12 +31,8 @@ Landing Page
     margin-top: 30px;
 }
 
-#iphone-mock {
-}
-
 #iphone-mock img {
     width: 700px;
-
 }
 
 #demo-link {
@@ -37,6 +41,20 @@ Landing Page
 
 h1 {
     margin: 2px;
+}
+
+.action-button {
+    background-color: white;
+    color: #6a67ce;
+    border: 1pt solid #6a67ce;
+    height: 50px;
+    transition: background-color 500ms, color 500ms, border 500ms;
+    -webkit-transition: background-color 500ms, color 500ms, border 500ms;
+}
+
+.action-button:hover {
+    background-color: #6a67ce;
+    color: white;
 }
 
 /*
@@ -61,48 +79,61 @@ Complete Sign-Up Page
 Main > Navbar
 */
 
-.main-container {
-    height: 700px;
-}
-
-#header {
-    margin: auto 50px;
-}
-
 .nav, #sidenav {
-    background-color: white;
     border: 1pt solid;
     border-color: #EEE #DDD #CCC;
+    border-bottom: 1px solid #EFF0F1;
 }
 
+.nav {
+    background-color: white;
+    box-shadow: rgba(0, 0, 0, 0.2) 0px 1px 3px 0px;
+}
 
 #sidenav {
+    background-color: #2a2f36;
     height: 100%;
+    width: 150px;
     position: fixed;
     padding-top: 10px;
 }
 
-#sidenav li {
+.nav-item {
     border: none;
     list-style-type: none;
-    padding: 10px 20px;
     margin: 10px auto;
+    padding: 10px 20px;
     font-size: 10pt;
 }
 
-a {
-    color: #222222;
-    text-decoration: none;
-    font-weight: bold;
+.nav-item:hover {
+    transition: background-color 500ms;
+    -webkit-transition: background-color 500ms;
+    background-color: #6a67ce;
 }
 
-a:hover {
+li a {
+    color: #848887;
     text-decoration: none;
-    font-weight: bold;
 }
 
-glyphicon:hover {
-    color: #0074bf;
+.nav-item:hover a {
+    text-decoration: none;
+    color: white;
+}
+
+.brand-group {
+    padding: 10px 20px;
+}
+
+#brand {
+    font-size: 14pt;
+    color: #f1f1f1;
+    letter-spacing: -1.2px;
+}
+
+#brand-glyph {
+    color: #FC636B;
 }
 
 /*
@@ -130,23 +161,26 @@ svg {
 
 .line {
   fill: none;
-  stroke: #2F3233;
+  stroke: #6a67ce;
   stroke-width: 2px;
   opacity: 0.8;
 }
 
 circle {
     fill: white;
-    stroke: #2F3233;
+    stroke: #A1A4AA;
     stroke-width: 2px;
 }
 
 circle:hover {
-    fill: #2F3233;
+    fill: #FC636B;
+    border: 2pt solid #1AAFD0;
+    transition: fill 500ms, border 500ms;
+    -webkit-transition: fill 500ms, border 500ms;
 }
 
 g text {
-    font-size: 8pt;
+    font-size: 10pt;
 }
 
 /*
@@ -198,13 +232,12 @@ hr {
 }
 
 .tooltip-chart {
-    background-color: #2F3233;
+    background-color: #FC636B;
     height: 16px;
 }
 
 .data-emotion {
-    color: #EDFBFF;
-    margin-left: 75%;
-    padding: 0;
+    display: inline;
+    color: black;
     font-size: 8pt;
 }
