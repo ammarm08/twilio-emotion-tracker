@@ -142,25 +142,6 @@ li a {
 Main > Linechart
 */
 
-.settings {
-    background: white;
-    border: 1pt solid;
-    border-color: #EEE #DDD #CCC;
-    border-bottom: 1px solid #EFF0F1;
-    box-shadow: rgba(0, 0, 0, 0.2) 0px 1px 3px 0px;
-    width: 400px;
-    font-size: 10pt;
-    padding: 12px;
-    transition: display 500ms;
-    -webkit-transition: display 500ms;
-}
-
-.show {
-    display: block;
-    transition: display 500ms;
-    -webkit-transition: display 500ms;
-}
-
 svg {
     margin-top: 20px;
     background-color: white;
@@ -273,6 +254,12 @@ hr {
 Main > Settings
 */
 
+.show {
+    display: block;
+    transition: display 500ms;
+    -webkit-transition: display 500ms;
+}
+
 .settings {
     display: none;
     background: white;
@@ -282,9 +269,12 @@ Main > Settings
     box-shadow: rgba(0, 0, 0, 0.2) 0px 1px 3px 0px;
     width: 400px;
     font-size: 10pt;
+    padding: 12px;
     position: absolute;
     top: 25%;
     left: 25%;
+    transition: display 500ms;
+    -webkit-transition: display 500ms;
 }
 
 #settings-header {
@@ -306,6 +296,13 @@ Main > Settings
     cursor: pointer;
 }
 
-.show {
-    display: block;
+
+/*
+SCREEN SIZE DEPENDENT STYLING
+*/
+
+@media (max-width: 480px) {
+    .main-container {
+        display: none;
+    }
 }
