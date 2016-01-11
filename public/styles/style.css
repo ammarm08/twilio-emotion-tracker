@@ -274,6 +274,7 @@ Main > Settings
 */
 
 .settings {
+    display: none;
     background: white;
     border: 1pt solid;
     border-color: #EEE #DDD #CCC;

@@ -16,17 +16,42 @@
           <ul class="list-group" id="sidenav">
             <li class="brand-group"><a href="/" id="brand"><i class="glyphicon glyphicon-unchecked" id="brand-glyph"></i> sigmund</a></li>
             <li class="nav-item"><a href="#"><i class="glyphicon glyphicon-home"></i>  Home</a></li>
-            <li class="nav-item"><a href="#"><i class="glyphicon glyphicon-cog"></i>  Settings</a></li>
+            <li class="nav-item" id="settings-nav"><a href="#"><i class="glyphicon glyphicon-cog"></i>  Settings</a></li>
             <li class="nav-item"><a href="/login"><i class="glyphicon glyphicon-off"></i>  Log Out</a></li>
           </ul>
         </div>
         
         <div class="col-sm-9">
           <div id="demo"></div>
+          <div class="settings">
+            <div><i class="glyphicon glyphicon-remove"></i></div>
+            <div id="settings-header">
+              <div>This is a demo account.</div>
+            </div>
+            <div id="settings-body">
+              <div>Click "Log Out" to create your account!</div>
+            </div>
+          </div>
         </div>
     </div>
 </div>
   <script src="/../App.js"></script>
+  <script>
+    $(function() {
+
+      $("#settings-nav").on("click", function(e) {
+        e.preventDefault();
+        $(".settings").toggleClass("show");
+        $(".main-container").toggleClass("dim");
+      });
+
+      $(".glyphicon-remove").on("click", function(e) {
+        e.preventDefault();
+        $(".settings").toggleClass("show");
+        $(".main-container").toggleClass("dim");
+      });
+    })()
+  </script>
 </body>
 </html>
 
