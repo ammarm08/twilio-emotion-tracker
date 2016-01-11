@@ -1,23 +1,23 @@
-language: javascript
-
 language: node_js
 node_js:
-  - "4.2.1"
-  - "4.1"
-  - "4.0"
-
+- 4.2.1
+- '4.1'
+- '4.0'
 services:
-  - mongodb
-
+- mongodb
 before_script:
-  - sleep 5
-  - npm install -g gulp
-  - npm install -g gulp-notify
-  - npm install -g mocha
-  - npm install -g chai
-  - npm install -g supertest
-  - npm install -g browserify
-  - npm install -g reactify
-  - npm install -g vinyl-source-stream
-
+- sleep 5
+- npm install -g gulp
+- npm install -g gulp-notify
+- npm install -g mocha
+- npm install -g chai
+- npm install -g supertest
+- npm install -g browserify
+- npm install -g reactify
+- npm install -g vinyl-source-stream
 cache: false
+env:
+  global:
+  - secure: vJ7MHmLRgYzYbiJC4/8xb+R63ZU1hisiccBd+Xi9combz8PVlFcyO7FMn8PPjhkp/g4kcIbNiqLKXO+OJUISzLycK1NpEqUx1/2QpS/qtGdMSiNd3cX7Fpl+9tKNISgByxvI0s7gQss9Rj7P/4dP/pjD9iKGPBy7FwwfAqh9qjE/C0T7I1IDiUcjRZIbW+R1Q5OTF8vlf+vq2qQ6+YzyabnZDTTM3QVdkbqkl+knikSpTC2sYGQdhd44uzk70azqpsUHrq0GolKldZlM7EIS4Vj07ijjicg23syoeNmqFhSJry4CqXZDBmqNKBz1EQITXWO6Vi36pO8u2bPs5cyy0WoXjZRx2cgErboGXzt/aOEAUkn+XqZcomKGRZBwoNSQJbeDMJOGuOu1ZUEyQ6JCWmRCKBgvMcLUWxnslUBNVqWVda8AFqNGVsj7BDaFJJ4dc3vjq12HmX6TaHaLPw8sagClt8eRmcrFt2luJo6n34ZEtDRcXw6Mlbs6z3y8wX1XkMkuzATNbv13+nCUCCPucM+HtQZWh0rDTKlPX4gNppk3TFlhf6MZ8CpU+XhThk4hMsCruffEdEk04nARSKNKZAChrV/4XZTzzqr/KJaByM7NAeQY1z8956IC8sqdoXWEbsIHtQTp7fBfN3I6YY3gKgRTVsDxNW1P3uwZ1wUM6ug=
+  - secure: AT02aHfSY6hDrLyA+NC37NmmH/CrgoG+zNOeBMkjdGN9MPqfpuCnZbjLrQwpoIO9u/HAFBfTe8bldgPf5pmuxcqBjTOqGO27XzpPrXedmSH+BnaazDGZn61XeNQMox1vRcofJEcC/251d4yhuIUZlSex8PauitzczlkBPudD9ukFVA+ItbHZgrPb5W/7O5m4QZkmAVehimipE4GoVkCcYIQuRLKIr38ugHYWm7hklWuYxB5fu1SutRBjCa95dqbNMVgrzwSg3bjiIVXr47U7m/IFijCbwUPDJBRSt5t2+vUl7BnZ1VvL9CM9yT/Ns9NGz6fFRS0VQpcqjfZolzA2qFUV+40ZnSV5zApRyZjfg0WqfNU+80D9alu6eaNrcMEuKrkvdD88dl0fEfJmW9xKwRGf+yF8+SEz3UrSPsICFTt7UCw0xmcsGKlGYePyJNeOV0k80U20vLa7Shf+GQ6tIJoBkUrpUxi0oxXzz8Ix1HktEv5hxk+K+8AZ0acOP0+JdCJnQN6lKWLoC2gzSfjRLmufwsV8XNJkS2dq9EwlGIOYW9yG7E7kcZAaVXYgCzD30IziYqDMvOTIHk+qyrIjGb2r86nSTd7+tyhGIPijuj4D3oBopnmyOmUHVua/p80crhUp40FXiQx1v+I6IEgpdNETCVRP2FwGi58Xif9/plU=
+  - secure: GcTdnpK/I8qBwOFLfSiLAIfHCHpZUOFWEFeIO5/UvJbUXt+8QlwRx7WHRDrZSUH6iyjltr1kO1i6vfaiNVkG9mc/+ynHDZCUEUIDtPdAiQot1aG85XKkF8BP2j1QQC26wvfnqh2wUisXF6XNLd24onLfxMC2BlvZJgQnK44HwK7+0lvdf0qOgpqZmq7KjMgNfhw2Z9ZSadKVbeCE1wHdeQHVRSyW/e9uLjjEdAN1CLxUhytBP8J6qDuEstmoTDfi2oMClMR9qHfzAq15ZsFzGOUBFL9yNFg12DV9YBb6+w0MSmvkm3YoLl+HQl7bg6ImBVX9NNF2dSUzlzUi40J819jXZ9Fh4q4dU2SE85V9/WTqLw3qtRDJT+gnDv5A/Mr3i7JnyhMLRrv68g2O3lgro1nkQeQAu4sLH+Xc3j1J5v5BfQzOyGlYUbAqI66IVuPMaIgUVFgvqncJX7FC0Cslau7aMwmOXv0cG0uF9cgQFqrCGVKO1QoXwzI6Gd3GJvlEdhty/idpQsBJ+RjIBausrAfRl0chBP9+wGuW3FInMn8es20Mde9rpZYquRMGNUnhNnZk9y64LthjijmF16qalg6clYfAs1mo892nBUEDj/LDw3OrFZGFVLFHn23QPq+KEYgUT6gGC/41aUR2OwvkOne/flJFbmB/MdhLToNWVtE=
