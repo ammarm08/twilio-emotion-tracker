@@ -2,7 +2,7 @@ var dummyData = [];
 
 var sampleNotes = [
   'Went for a long walk after lunch',
-  'My girlfriend broke up with me',
+  'Went ziplining!',
   'I ran my first marathon!',
   'Really really hungover',
   'Got up early and hit some golf balls off the pier',
@@ -11,7 +11,7 @@ var sampleNotes = [
   'Sent in apps for grad school!',
   'Drove to IKEA to scope out some furniture',
   'Ate something weird for dinner...',
-  'Watched Friday Night Lights for 4 hours, ugh',
+  'Watched Friday Night Lights for 4 hours',
   'Made my bed',
   'Relaxing at the beach',
   'Our building doesn\'t have warm water today',
@@ -19,10 +19,10 @@ var sampleNotes = [
   'Forced my roommate to come with me to see Jai Wolf',
   'Nothing much',
   'Bought a new pair of running shoes',
-  'Got kicked out of an H&M for looking suspicious',
+  'Got some sweet sweaters from H&M',
   'Spent all day in the park! And brunch.',
   'It\'s so nice outside, can\'t complain',
-  'Wrote a bunch of fake notes for the fake account for some app'
+  'Wrote a blog post as a capstone for a project I was working on'
 ];
 
 function randomDate(start, end) {
