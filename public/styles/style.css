@@ -7,6 +7,8 @@ body {
 .main-container {
     height: 720px;
     background-color: #f1f1f1;
+    transition: background-color 500ms;
+    -webkit-transition: background-color 500ms;
 }
 
 .navbar-brand {
@@ -140,11 +142,30 @@ li a {
 Main > Linechart
 */
 
+.settings {
+    background: white;
+    border: 1pt solid;
+    border-color: #EEE #DDD #CCC;
+    border-bottom: 1px solid #EFF0F1;
+    box-shadow: rgba(0, 0, 0, 0.2) 0px 1px 3px 0px;
+    width: 400px;
+    font-size: 10pt;
+    padding: 12px;
+    transition: display 500ms;
+    -webkit-transition: display 500ms;
+}
+
+.show {
+    display: block;
+    transition: display 500ms;
+    -webkit-transition: display 500ms;
+}
+
 svg {
     margin-top: 20px;
     background-color: white;
     border: 1pt solid;
-    border-color: #EEE #DDD #CCC
+    border-color: #EEE #DDD #CCC;
 }
 
 .axis path,
@@ -240,4 +261,50 @@ hr {
     display: inline;
     color: black;
     font-size: 8pt;
+}
+
+.dim {
+    background-color: #32322C;
+    transition: background-color 500ms, opacity 500ms;
+    -webkit-transition: background-color 500ms, opacity 500ms;
+}
+
+/*
+Main > Settings
+*/
+
+.settings {
+    background: white;
+    border: 1pt solid;
+    border-color: #EEE #DDD #CCC;
+    border-bottom: 1px solid #EFF0F1;
+    box-shadow: rgba(0, 0, 0, 0.2) 0px 1px 3px 0px;
+    width: 400px;
+    font-size: 10pt;
+    position: absolute;
+    top: 25%;
+    left: 25%;
+}
+
+#settings-header {
+    font-size: 14pt;
+    text-align: center;
+    font-weight: bold;
+}
+
+#settings-body {
+    margin: 10px auto;
+    width: 75%;
+}
+
+.glyphicon-remove {
+    float: right;
+}
+
+.glyphicon-remove:hover {
+    cursor: pointer;
+}
+
+.show {
+    display: block;
 }
