@@ -4,6 +4,10 @@ body {
     font-family: 'Open Sans', sans-serif;
 }
 
+.mobile {
+    display: none;
+}
+
 .main-container {
     height: 720px;
     background-color: #f1f1f1;
@@ -304,5 +308,8 @@ SCREEN SIZE DEPENDENT STYLING
 @media (max-width: 480px) {
     .main-container {
         display: none;
+    }
+    .mobile {
+        display: block;
     }
 }
