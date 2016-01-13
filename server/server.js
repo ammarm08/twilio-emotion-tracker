@@ -1,3 +1,6 @@
+//NEW RELIC AVAILABILITY MONITORING
+require('newrelic');
+
 var app = require('./server-config');
 var port = process.env.PORT || 3000;
 
